@@ -3,7 +3,7 @@
     <view class="header-top">
       <view class="header-title">负债管理</view>
       <view class="header-actions">
-        <view class="header-btn" bindtap="showToast">🔔</view>
+        <view class="header-btn" bindtap="showNotifications">🔔</view>
         <view class="header-btn" bindtap="goSettings">⚙️</view>
       </view>
     </view>
@@ -16,12 +16,12 @@
     </view>
     <view class="main-amount">
       <text class="currency">¥</text>
-      <text class="amount {{hideAmount ? 'hidden' : ''}}">{{hideAmount ? '***.**' : formatMoney(totalDebt)}}</text>
+      <text class="amount {{hideAmount ? 'hidden' : ''}}">{{hideAmount ? '***.**' : totalDebtDisplay}}</text>
     </view>
     <view class="data-row">
       <view class="data-item">
         <view class="data-item-label">本月待还</view>
-        <view class="data-item-value highlight">{{hideAmount ? '***' : '¥' + formatMoney(monthRepay)}}</view>
+        <view class="data-item-value highlight">{{hideAmount ? '***' : '¥' + monthRepayDisplay}}</view>
       </view>
       <view class="data-item">
         <view class="data-item-label">清零倒计时</view>
@@ -43,6 +43,55 @@
     </view>
   </view>
 
+  <!-- 数据可视化区域 -->
+  <view class="visual-section" wx:if="{{channels.length > 0}}">
+    <view class="visual-header">
+      <view class="visual-title">数据分析</view>
+      <view class="visual-tabs">
+        <view class="visual-tab {{visualTab==='trend'?'active':''}}" bindtap="switchVisualTab" data-type="trend">趋势</view>
+        <view class="visual-tab {{visualTab==='pie'?'active':''}}" bindtap="switchVisualTab" data-type="pie">占比</view>
+      </view>
+    </view>
+    
+    <!-- 趋势图 -->
+    <view class="chart-container" wx:if="{{visualTab==='trend'}}">
+      <view class="trend-chart">
+        <view class="chart-y-axis">
+          <text>{{trendMax}}</text>
+          <text>{{trendMid}}</text>
+          <text>0</text>
+        </view>
+        <view class="trend-bars">
+          <view class="trend-bar-item" wx:for="{{trendData}}" wx:key="month">
+            <view class="bar-wrapper">
+              <view class="trend-bar" style="height: {{item.percent}}%"></view>
+            </view>
+            <text class="bar-label">{{item.month}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 饼图 -->
+    <view class="chart-container" wx:if="{{visualTab==='pie'}}">
+      <view class="pie-chart">
+        <view class="pie-circle">
+          <view class="pie-center">
+            <text class="pie-total">{{totalDebtDisplay}}</text>
+            <text class="pie-label">总负债</text>
+          </view>
+        </view>
+      </view>
+      <view class="pie-legend">
+        <view class="legend-item" wx:for="{{pieData}}" wx:key="type">
+          <view class="legend-dot" style="background:{{item.color}}"></view>
+          <text class="legend-name">{{item.name}}</text>
+          <text class="legend-value">{{item.percentage}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
   <view class="motivation-banner" wx:if="{{channels.length > 0}}">
     <view class="motivation-text">{{motivationText}}</view>
     <view class="motivation-sub">已还款 {{progress}}%，继续加油！</view>
@@ -58,7 +107,7 @@
         <view class="warning-name">{{item.name}}</view>
         <view class="warning-day {{item.dayClass}}">{{item.dayText}}</view>
       </view>
-      <view class="warning-amount">¥{{formatMoney(item.monthlyPayment)}}</view>
+      <view class="warning-amount">¥{{item.monthlyPaymentDisplay}}</view>
     </view>
   </view>
 
@@ -84,7 +133,7 @@
       </view>
       <view class="channel-amount">
         <text class="amount-label">剩余</text>
-        <text class="amount-value">¥ {{formatMoney(item.remaining)}}</text>
+        <text class="amount-value">¥ {{item.remainingDisplay}}</text>
       </view>
       <view class="channel-progress">
         <view class="progress-bar-sm">

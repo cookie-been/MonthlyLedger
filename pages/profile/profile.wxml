@@ -1,14 +1,17 @@
 <view class="profile-page">
   <view class="profile-header">
-    <view class="avatar">👤</view>
+    <view class="avatar" bindtap="chooseAvatar">
+      <image wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" mode="aspectFill" class="avatar-img"></image>
+      <text wx:else class="avatar-text">👤</text>
+    </view>
     <view class="user-info">
-      <view class="nickname">用户</view>
+      <view class="nickname" bindtap="editNickName">{{userInfo.nickName}} ✏️</view>
       <view class="user-stats">已使用 {{useDays}} 天</view>
     </view>
   </view>
   <view class="stats-grid">
     <view class="stats-grid-item">
-      <view class="stats-grid-value primary">¥{{formatMoney(totalDebt)}}</view>
+      <view class="stats-grid-value primary">¥{{totalDebtDisplay}}</view>
       <view class="stats-grid-label">总负债</view>
     </view>
     <view class="stats-grid-item">
@@ -16,7 +19,7 @@
       <view class="stats-grid-label">已清零</view>
     </view>
     <view class="stats-grid-item">
-      <view class="stats-grid-value warning">¥{{formatMoney(totalRepaid)}}</view>
+      <view class="stats-grid-value warning">¥{{totalRepaidDisplay}}</view>
       <view class="stats-grid-label">累计还款</view>
     </view>
   </view>

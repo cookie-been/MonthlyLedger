@@ -1,4 +1,4 @@
-.record-page { min-height: 100vh; background: #F5F7FA; padding-bottom: 40rpx; }
+.record-page { min-height: 100vh; background: #F5F7FA; padding-bottom: 120rpx; }
 .record-header {
   background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
   padding: 120rpx 48rpx 80rpx;

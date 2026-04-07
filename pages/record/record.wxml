@@ -5,11 +5,11 @@
     <view class="record-stats">
       <view class="record-stat">
         <view class="record-stat-label">累计还款</view>
-        <view class="record-stat-value">¥{{formatMoney(totalRepaid)}}</view>
+        <view class="record-stat-value">¥{{totalRepaidDisplay}}</view>
       </view>
       <view class="record-stat">
         <view class="record-stat-label">本月还款</view>
-        <view class="record-stat-value">¥{{formatMoney(monthRepaid)}}</view>
+        <view class="record-stat-value">¥{{monthRepaidDisplay}}</view>
       </view>
       <view class="record-stat">
         <view class="record-stat-label">已清零</view>
@@ -33,6 +33,6 @@
       <view class="record-time">{{item.time}}</view>
       <view class="record-note" wx:if="{{item.note}}">{{item.note}}</view>
     </view>
-    <view class="record-amount">-¥{{formatMoney(item.amount)}}</view>
+    <view class="record-amount">-¥{{item.amountDisplay}}</view>
   </view>
 </view>

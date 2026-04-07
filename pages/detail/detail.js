@@ -6,10 +6,15 @@ Page({
     channel: {},
     showRepayModal: false,
     repayAmount: '',
-    repayNote: ''
+    repayNote: '',
+    remainingDisplay: '0.00',
+    totalAmountDisplay: '0.00',
+    paidDisplay: '0.00',
+    monthlyPaymentDisplay: '0.00'
   },
 
   onLoad: function(options) {
+    var that = this
     var id = parseInt(options.id)
     var channels = app.globalData.channels
     var channel = null
@@ -20,7 +25,13 @@ Page({
       }
     }
     if (channel) {
-      this.setData({ channel: channel })
+      this.setData({ 
+        channel: channel,
+        remainingDisplay: this.formatMoney(channel.remaining),
+        totalAmountDisplay: this.formatMoney(channel.totalAmount),
+        paidDisplay: this.formatMoney(channel.totalAmount - channel.remaining),
+        monthlyPaymentDisplay: this.formatMoney(channel.monthlyPayment)
+      })
       wx.setNavigationBarTitle({ title: channel.name })
     }
     if (options.action === 'repay') {
@@ -28,8 +39,19 @@ Page({
     }
   },
 
-  formatMoney: function(n) {
-    return (n || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  formatMoney: function(val) {
+    if (val === undefined || val === null) return '0.00'
+    var num = Number(val)
+    if (isNaN(num)) return '0.00'
+    var arr = num.toFixed(2).split('.')
+    var intPart = arr[0]
+    var decimal = arr[1] || '00'
+    var result = ''
+    while (intPart.length > 3) {
+      result = ',' + intPart.slice(-3) + result
+      intPart = intPart.slice(0, -3)
+    }
+    return intPart + result + '.' + decimal
   },
 
   goBack: function() {

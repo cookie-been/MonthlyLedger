@@ -7,7 +7,9 @@ Page({
     filteredRecords: [],
     filterType: 'all',
     totalRepaid: 0,
+    totalRepaidDisplay: '0.00',
     monthRepaid: 0,
+    monthRepaidDisplay: '0.00',
     clearedCount: 0
   },
 
@@ -25,9 +27,8 @@ Page({
     var totalRepaid = 0
     var monthRepaid = 0
     var clearedCount = 0
-    var i
 
-    for (i = 0; i < records.length; i++) {
+    for (var i = 0; i < records.length; i++) {
       totalRepaid += records[i].amount
       var recordDate = util.parseDate(records[i].time)
       if (recordDate.getTime() >= startOfMonth.getTime()) {
@@ -41,7 +42,14 @@ Page({
       }
     }
 
-    this.setData({ records: records, totalRepaid: totalRepaid, monthRepaid: monthRepaid, clearedCount: clearedCount })
+    this.setData({ 
+      records: records, 
+      totalRepaid: totalRepaid, 
+      totalRepaidDisplay: this.formatMoney(totalRepaid),
+      monthRepaid: monthRepaid, 
+      monthRepaidDisplay: this.formatMoney(monthRepaid),
+      clearedCount: clearedCount 
+    })
     this.applyFilter()
   },
 
@@ -49,6 +57,7 @@ Page({
     var records = this.data.records
     var filterType = this.data.filterType
     var now = new Date()
+    var that = this
     var filtered = records
 
     if (filterType === 'month') {
@@ -56,7 +65,9 @@ Page({
       filtered = []
       for (var i = 0; i < records.length; i++) {
         if (util.parseDate(records[i].time).getTime() >= start.getTime()) {
-          filtered.push(records[i])
+          var rec = records[i]
+          rec.amountDisplay = that.formatMoney(rec.amount)
+          filtered.push(rec)
         }
       }
     } else if (filterType === 'year') {
@@ -64,8 +75,15 @@ Page({
       filtered = []
       for (var j = 0; j < records.length; j++) {
         if (util.parseDate(records[j].time).getTime() >= startYear.getTime()) {
-          filtered.push(records[j])
+          var rec = records[j]
+          rec.amountDisplay = that.formatMoney(rec.amount)
+          filtered.push(rec)
         }
+      }
+    } else {
+      // all - 添加 display 字段
+      for (var k = 0; k < records.length; k++) {
+        records[k].amountDisplay = that.formatMoney(records[k].amount)
       }
     }
 
@@ -77,8 +95,19 @@ Page({
     this.applyFilter()
   },
 
-  formatMoney: function(n) {
-    return (n || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  formatMoney: function(val) {
+    if (val === undefined || val === null) return '0.00'
+    var num = Number(val)
+    if (isNaN(num)) return '0.00'
+    var arr = num.toFixed(2).split('.')
+    var intPart = arr[0]
+    var decimal = arr[1] || '00'
+    var result = ''
+    while (intPart.length > 3) {
+      result = ',' + intPart.slice(-3) + result
+      intPart = intPart.slice(0, -3)
+    }
+    return intPart + result + '.' + decimal
   },
 
   goDetail: function(e) {

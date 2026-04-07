@@ -2,7 +2,7 @@
   <view class="detail-header">
     <view class="detail-back" bindtap="goBack">← 返回</view>
     <view class="detail-title">{{channel.name}}</view>
-    <view class="detail-amount">¥ {{formatMoney(channel.remaining)}}</view>
+    <view class="detail-amount">¥ {{remainingDisplay}}</view>
     <view class="detail-progress">
       <view class="detail-progress-fill" style="width: {{channel.progress}}%"></view>
     </view>
@@ -11,15 +11,15 @@
   <view class="detail-info">
     <view class="detail-row">
       <text class="detail-label">总欠款</text>
-      <text class="detail-value">¥ {{formatMoney(channel.totalAmount)}}</text>
+      <text class="detail-value">¥ {{totalAmountDisplay}}</text>
     </view>
     <view class="detail-row">
       <text class="detail-label">已还</text>
-      <text class="detail-value">¥ {{formatMoney(channel.totalAmount - channel.remaining)}}</text>
+      <text class="detail-value">¥ {{paidDisplay}}</text>
     </view>
     <view class="detail-row">
       <text class="detail-label">每月应还</text>
-      <text class="detail-value">¥ {{formatMoney(channel.monthlyPayment)}}</text>
+      <text class="detail-value">¥ {{monthlyPaymentDisplay}}</text>
     </view>
     <view class="detail-row">
       <text class="detail-label">还款日</text>
@@ -42,7 +42,7 @@
         <text class="suggestion-card-name">推荐还款</text>
         <text class="suggestion-card-tag snowball">本月应还</text>
       </view>
-      <view class="suggestion-card-desc">建议还款金额：¥{{formatMoney(channel.monthlyPayment)}}</view>
+      <view class="suggestion-card-desc">建议还款金额：¥{{monthlyPaymentDisplay}}</view>
       <view class="suggestion-card-reason">还款日：每月{{channel.repaymentDay}}日</view>
     </view>
   </view>
@@ -54,7 +54,7 @@
       <view class="timeline-line" wx:if="{{i < channel.totalPeriods}}"></view>
       <view class="timeline-content">
         <view class="timeline-period">第{{i}}期 {{i <= channel.paidPeriods ? '已还' : (i === channel.paidPeriods + 1 ? '进行中' : '待还')}}</view>
-        <view class="timeline-amount">¥ {{formatMoney(channel.monthlyPayment)}}</view>
+        <view class="timeline-amount">¥ {{monthlyPaymentDisplay}}</view>
       </view>
     </view>
   </view>
