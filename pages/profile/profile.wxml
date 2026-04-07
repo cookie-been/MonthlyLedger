@@ -33,15 +33,6 @@
     <view class="menu-item" bindtap="goAchievement">
       <view class="menu-icon">🏆</view><view class="menu-text">成就徽章</view><view class="menu-arrow">›</view>
     </view>
-    <view class="menu-item" bindtap="showReward">
-      <view class="menu-icon">☕</view><view class="menu-text">打赏开发者</view><view class="menu-arrow">›</view>
-    </view>
-  </view>
-  <view class="reward-modal" wx:if="{{showRewardModal}}" bindtap="closeReward">
-    <view class="reward-content" catchtap="true">
-      <image src="images/skm.jpg" mode="widthFix" class="reward-img" show-menu-by-longpress></image>
-      <view class="reward-tip">长按二维码识别→发送给朋友</view>
-    </view>
   </view>
   <view class="menu-section">
     <view class="menu-item" bindtap="exportData">

@@ -40,11 +40,3 @@
 }
 .menu-text { flex: 1; font-size: 30rpx; color: #1A202C; }
 .menu-arrow { color: #A0AEC0; font-size: 36rpx; }
-.reward-modal {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6); z-index: 999;
-  display: flex; align-items: center; justify-content: center;
-}
-.reward-content { background: #fff; padding: 40rpx; border-radius: 16rpx; text-align: center; }
-.reward-img { width: 500rpx; height: auto; }
-.reward-tip { margin-top: 20rpx; color: #666; font-size: 28rpx; }
