@@ -9,7 +9,8 @@ Page({
     totalRepaid: 0,
     totalRepaidDisplay: '0.00',
     useDays: 0,
-    userInfo: {}
+    userInfo: {},
+    showRewardModal: false
   },
 
   onShow: function() {
@@ -125,6 +126,14 @@ Page({
     wx.navigateTo({ url: '/pages/achievement/achievement' })
   },
 
+  showReward: function() {
+    this.setData({ showRewardModal: true })
+  },
+
+  closeReward: function() {
+    this.setData({ showRewardModal: false })
+  },
+
   goSettings: function() {
     wx.navigateTo({ url: '/pages/settings/settings' })
   },
@@ -132,8 +141,18 @@ Page({
   showAbout: function() {
     wx.showModal({
       title: '关于我们',
-      content: '负债管理 v2.0.0\n致力于帮助用户轻松管理债务，早日实现财务自由。',
-      showCancel: false
+      content: '月月账单 v1.0.0\n致力于帮助用户轻松管理债务，早日实现财务自由。\n\nQQ群: 418732055',
+      confirmText: '复制群号',
+      success: function(res) {
+        if (res.confirm) {
+          wx.setClipboardData({
+            data: '418732055',
+            success: function() {
+              wx.showToast({ title: 'QQ群号已复制', icon: 'success' })
+            }
+          })
+        }
+      }
     })
   },
 

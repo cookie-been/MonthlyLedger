@@ -4,7 +4,7 @@
 **Type:** WeChat Mini-program (微信小程序)
 
 ## OVERVIEW
-微信小程序负债管理工具。支持信用卡、花呗、借呗、网贷等债务追踪，含还款日历、记录统计、成就系统。
+微信小程序月月账单工具。支持信用卡、花呗、借呗、网贷等债务追踪，含还款日历、记录统计、成就系统。
 
 ## STRUCTURE
 ```
@@ -19,12 +19,13 @@
 │   ├── add/                      # 添加/编辑负债表单
 │   ├── calendar/                # 日历页 - 还款日期视图
 │   ├── record/                  # 记录页 - 还款历史
+│   ├── analytics/              # 分析页 - 数据可视化
 │   ├── profile/                 # 我的页 - 头像昵称、统计、导出导入
 │   ├── achievement/            # 成就页 - 成就徽章
 │   ├── settings/                # 设置页 - 还款提醒、数据管理
 │   ├── suggestion/             # 反馈页 - 用户建议
 │   └── splash/                  # 启动页 - 1秒启动动画
-└── images/                       # TabBar图标
+└── images/                       # TabBar图标、打赏收款码
 ```
 
 ## WHERE TO LOOK
@@ -38,6 +39,7 @@
 | 导出/导入 | `pages/profile/profile.js`, `pages/settings/settings.js` | JSON文件操作 |
 | 成就系统 | `pages/detail/detail.js` | checkAchievements() |
 | 用户信息 | `app.js` | userInfo: nickName, avatarUrl |
+| 打赏收款码 | `images/skm.jpg` | 弹窗展示 |
 
 ## DATA MODEL
 ```javascript
@@ -97,4 +99,5 @@
 - 无 ESLint/EditorConfig/jsconfig.json 配置
 - App ID: wxe87fb8ace86a7051
 - 启动流程: splash(1秒) → index 首页
+- 版本: v1.0.0
 - 数据导出为 JSON 文件保存到 USER_DATA_PATH
