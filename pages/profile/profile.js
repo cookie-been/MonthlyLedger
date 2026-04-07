@@ -1,4 +1,5 @@
 var app = getApp()
+var util = require('../../utils/util.js')
 
 Page({
   data: {
@@ -13,8 +14,9 @@ Page({
     var totalDebt = 0
     var totalOrig = 0
     var clearedCount = 0
+    var i
 
-    for (var i = 0; i < channels.length; i++) {
+    for (i = 0; i < channels.length; i++) {
       totalDebt += channels[i].remaining
       totalOrig += channels[i].totalAmount
       if (channels[i].remaining === 0) {
@@ -23,8 +25,10 @@ Page({
     }
 
     var totalRepaid = totalOrig - totalDebt
-    var createdAt = app.globalData.createdAt || new Date().toISOString()
-    var useDays = Math.floor((Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60 * 24)) + 1
+    var createdAt = app.globalData.createdAt || util.formatTime(new Date())
+    var createdDate = util.parseDate(createdAt)
+    var now = new Date()
+    var useDays = Math.floor((now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24)) + 1
 
     this.setData({ totalDebt: totalDebt, totalRepaid: totalRepaid, clearedCount: clearedCount, useDays: useDays })
   },
@@ -59,7 +63,7 @@ Page({
       records: app.globalData.records,
       settings: app.globalData.settings,
       achievements: app.globalData.achievements,
-      exportTime: new Date().toISOString()
+      exportTime: util.formatTime(new Date())
     }, null, 2)
 
     wx.setClipboardData({
@@ -85,9 +89,12 @@ Page({
                   app.globalData.channels = data.channels
                   app.globalData.records = data.records || []
                   if (data.settings) {
-                    var settings = app.globalData.settings
-                    for (var key in data.settings) {
-                      settings[key] = data.settings[key]
+                    var s = app.globalData.settings
+                    var key
+                    for (key in data.settings) {
+                      if (data.settings.hasOwnProperty(key)) {
+                        s[key] = data.settings[key]
+                      }
                     }
                   }
                   if (data.achievements) app.globalData.achievements = data.achievements

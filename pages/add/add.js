@@ -114,7 +114,7 @@ Page({
       }
       wx.showToast({ title: '修改成功', icon: 'success' })
     } else {
-      data.id = Date.now()
+      data.id = new Date().getTime()
       data.remaining = total
       data.progress = 0
       data.paidPeriods = 0

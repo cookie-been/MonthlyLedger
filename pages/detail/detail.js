@@ -1,4 +1,5 @@
 var app = getApp()
+var util = require('../../utils/util.js')
 
 Page({
   data: {
@@ -80,20 +81,12 @@ Page({
       channel.paidPeriods = Math.min(channel.totalPeriods, channel.paidPeriods + 1)
     }
 
-    var now = new Date()
-    var timeStr = now.getFullYear() + '-' + 
-      (now.getMonth() + 1 < 10 ? '0' : '') + (now.getMonth() + 1) + '-' + 
-      (now.getDate() < 10 ? '0' : '') + now.getDate() + ' ' +
-      (now.getHours() < 10 ? '0' : '') + now.getHours() + ':' +
-      (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ':' +
-      (now.getSeconds() < 10 ? '0' : '') + now.getSeconds()
-
     app.globalData.records.unshift({
-      id: Date.now(),
+      id: new Date().getTime(),
       channelId: channel.id,
       name: channel.name,
       amount: amount,
-      time: timeStr,
+      time: util.formatTime(new Date()),
       note: note
     })
 
@@ -117,7 +110,8 @@ Page({
     var newOnes = []
     var hasFirstClear = false
     var hasAllClear = false
-    for (var i = 0; i < achievements.length; i++) {
+    var i
+    for (i = 0; i < achievements.length; i++) {
       if (achievements[i] === 'first_clear') hasFirstClear = true
       if (achievements[i] === 'all_clear') hasAllClear = true
     }

@@ -1,3 +1,6 @@
+var app = getApp()
+var util = require('../../utils/util.js')
+
 App({
   globalData: {
     channels: [],
@@ -32,14 +35,6 @@ App({
   },
 
   _initDemoData: function() {
-    var now = new Date()
-    var timeStr = now.getFullYear() + '-' + 
-      (now.getMonth() + 1 < 10 ? '0' : '') + (now.getMonth() + 1) + '-' + 
-      (now.getDate() < 10 ? '0' : '') + now.getDate() + 'T' +
-      (now.getHours() < 10 ? '0' : '') + now.getHours() + ':' +
-      (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ':' +
-      (now.getSeconds() < 10 ? '0' : '') + now.getSeconds()
-
     this.globalData.channels = [
       { id: 1, name: '招商信用卡', type: 'credit_card', totalAmount: 10000, monthlyPayment: 1500, remaining: 5800, repaymentDay: 15, progress: 42, interestRate: 0, totalPeriods: 0, paidPeriods: 0 },
       { id: 2, name: '支付宝花呗', type: 'huabei', totalAmount: 4000, monthlyPayment: 800, remaining: 3200, repaymentDay: 10, progress: 20, interestRate: 0, totalPeriods: 0, paidPeriods: 0 },
@@ -52,7 +47,7 @@ App({
       { id: 3, channelId: 3, name: '支付宝借呗', amount: 600, time: '2024-02-20 10:15:00', note: '第7期' }
     ]
     this.globalData.achievements = ['first_repay']
-    this.globalData.createdAt = timeStr
+    this.globalData.createdAt = util.formatTime(new Date())
     this.saveData()
   },
 

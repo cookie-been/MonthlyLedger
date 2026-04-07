@@ -1,4 +1,5 @@
 var app = getApp()
+var util = require('../../utils/util.js')
 
 Page({
   data: {
@@ -24,10 +25,12 @@ Page({
     var totalRepaid = 0
     var monthRepaid = 0
     var clearedCount = 0
+    var i
 
-    for (var i = 0; i < records.length; i++) {
+    for (i = 0; i < records.length; i++) {
       totalRepaid += records[i].amount
-      if (new Date(records[i].time) >= startOfMonth) {
+      var recordDate = util.parseDate(records[i].time)
+      if (recordDate.getTime() >= startOfMonth.getTime()) {
         monthRepaid += records[i].amount
       }
     }
@@ -52,7 +55,7 @@ Page({
       var start = new Date(now.getFullYear(), now.getMonth(), 1)
       filtered = []
       for (var i = 0; i < records.length; i++) {
-        if (new Date(records[i].time) >= start) {
+        if (util.parseDate(records[i].time).getTime() >= start.getTime()) {
           filtered.push(records[i])
         }
       }
@@ -60,7 +63,7 @@ Page({
       var startYear = new Date(now.getFullYear(), 0, 1)
       filtered = []
       for (var j = 0; j < records.length; j++) {
-        if (new Date(records[j].time) >= startYear) {
+        if (util.parseDate(records[j].time).getTime() >= startYear.getTime()) {
           filtered.push(records[j])
         }
       }
