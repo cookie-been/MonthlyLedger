@@ -1,0 +1,54 @@
+<view class="suggestion-page">
+  <view class="suggestion-header">
+    <view class="suggestion-title">还款建议</view>
+    <view class="suggestion-desc">智能推荐最优还款策略</view>
+  </view>
+  <view class="strategy-card {{selectedStrategy==='snowball'?'active':''}}" bindtap="selectStrategy" data-strategy="snowball">
+    <view class="strategy-header">
+      <view class="strategy-name">雪球法</view>
+      <view class="strategy-tag">快速获得成就感</view>
+    </view>
+    <view class="strategy-desc">优先还清最小额度的债务，快速看到第一个还清的结果</view>
+    <view class="strategy-plan">
+      <view style="font-size:28rpx;font-weight:600;margin-bottom:24rpx;">还款顺序：</view>
+      <view class="plan-item" wx:for="{{snowballChannels}}" wx:key="id" wx:for-index="idx">
+        <view class="plan-index">{{idx + 1}}</view>
+        <view class="plan-name">{{item.name}}</view>
+        <view class="plan-amount">¥{{formatMoney(item.monthlyPayment)}}</view>
+        <view class="plan-reason">剩余最少</view>
+      </view>
+    </view>
+    <view class="strategy-result">预计清零：{{estimatedMonths}}个月</view>
+  </view>
+  <view class="strategy-card {{selectedStrategy==='avalanche'?'active':''}}" bindtap="selectStrategy" data-strategy="avalanche">
+    <view class="strategy-header">
+      <view class="strategy-name">雪崩法</view>
+      <view class="strategy-tag" style="color:#4ECDC4;background:#E8F8F5;">节省总利息</view>
+    </view>
+    <view class="strategy-desc">优先还清利率最高的债务，长期来看节省更多利息</view>
+    <view class="strategy-plan">
+      <view style="font-size:28rpx;font-weight:600;margin-bottom:24rpx;">还款顺序：</view>
+      <view class="plan-item" wx:for="{{avalancheChannels}}" wx:key="id" wx:for-index="idx">
+        <view class="plan-index">{{idx + 1}}</view>
+        <view class="plan-name">{{item.name}}</view>
+        <view class="plan-amount">¥{{formatMoney(item.monthlyPayment)}}</view>
+        <view class="plan-reason">利率 {{item.interestRate}}%</view>
+      </view>
+    </view>
+    <view class="strategy-result">预计清零：{{estimatedMonths}}个月</view>
+  </view>
+  <view class="summary-section">
+    <view class="summary-item">
+      <view style="font-size:26rpx;color:#718096;margin-bottom:12rpx;">总负债</view>
+      <view style="font-size:36rpx;font-weight:700;">¥{{formatMoney(totalDebt)}}</view>
+    </view>
+    <view class="summary-item">
+      <view style="font-size:26rpx;color:#718096;margin-bottom:12rpx;">月还款</view>
+      <view style="font-size:36rpx;font-weight:700;">¥{{formatMoney(monthlyPayment)}}</view>
+    </view>
+    <view class="summary-item">
+      <view style="font-size:26rpx;color:#718096;margin-bottom:12rpx;">预计清零</view>
+      <view style="font-size:36rpx;font-weight:700;">{{clearDate}}</view>
+    </view>
+  </view>
+</view>

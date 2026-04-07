@@ -1,0 +1,49 @@
+<view class="add-page">
+  <view class="form-section">
+    <view class="form-group">
+      <text class="form-label">渠道名称 <text style="color:#FF6B6B;">*</text></text>
+      <input class="form-input" value="{{form.name}}" bindinput="onNameInput" placeholder="如：花呗" maxlength="20"/>
+    </view>
+    <view class="form-group">
+      <text class="form-label">渠道类型 <text style="color:#FF6B6B;">*</text></text>
+      <view class="type-options">
+        <view class="type-option {{form.type==='credit_card'?'active':''}}" bindtap="selectType" data-type="credit_card">💳 信用卡</view>
+        <view class="type-option {{form.type==='huabei'?'active':''}}" bindtap="selectType" data-type="huabei">📱 花呗</view>
+        <view class="type-option {{form.type==='jiebei'?'active':''}}" bindtap="selectType" data-type="jiebei">💵 借呗</view>
+        <view class="type-option {{form.type==='net_loan'?'active':''}}" bindtap="selectType" data-type="net_loan">🌐 网贷</view>
+        <view class="type-option {{form.type==='other'?'active':''}}" bindtap="selectType" data-type="other">📋 其他</view>
+      </view>
+    </view>
+    <view class="form-group">
+      <text class="form-label">总欠款金额 <text style="color:#FF6B6B;">*</text></text>
+      <view class="amount-input">
+        <text class="currency">¥</text>
+        <input class="input" type="digit" value="{{form.totalAmount}}" bindinput="onTotalInput" placeholder="0.00"/>
+      </view>
+    </view>
+    <view class="form-group">
+      <text class="form-label">每月应还</text>
+      <view class="amount-input">
+        <text class="currency">¥</text>
+        <input class="input" type="digit" value="{{form.monthlyPayment}}" bindinput="onMonthlyInput" placeholder="0.00"/>
+      </view>
+    </view>
+    <view class="form-group">
+      <text class="form-label">分期数（可选）</text>
+      <input class="form-input" type="number" value="{{form.totalPeriods}}" bindinput="onPeriodsInput" placeholder="总期数"/>
+    </view>
+    <view class="form-group">
+      <text class="form-label">还款日期 <text style="color:#FF6B6B;">*</text></text>
+      <picker mode="selector" range="{{dayOptions}}" value="{{dayIndex}}" bindchange="onDayChange">
+        <view class="picker-value">每月 {{form.repaymentDay}} 日 <text class="arrow">▼</text></view>
+      </picker>
+    </view>
+    <view class="form-group">
+      <text class="form-label">年利率（%）</text>
+      <input class="form-input" type="digit" value="{{form.interestRate}}" bindinput="onRateInput" placeholder="0.00"/>
+    </view>
+  </view>
+  <view class="bottom-action">
+    <button class="btn-primary" bindtap="saveChannel" disabled="{{!canSave}}">{{isEdit ? '保存修改' : '添加负债'}}</button>
+  </view>
+</view>

@@ -1,0 +1,97 @@
+.add-page {
+  min-height: 100vh;
+  background: #F5F7FA;
+  padding-bottom: 180rpx;
+}
+
+.form-section {
+  background: #FFFFFF;
+  padding: 40rpx;
+}
+
+.type-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.type-option {
+  padding: 16rpx 32rpx;
+  background: #F8FAFC;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: #718096;
+  border: 4rpx solid transparent;
+}
+
+.type-option.active {
+  background: #FFF5F5;
+  color: #FF6B6B;
+  border-color: #FF6B6B;
+}
+
+.amount-input {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  background: #F8FAFC;
+  border-radius: 24rpx;
+  padding: 0 32rpx;
+  border: 1rpx solid #E2E8F0;
+}
+
+.currency {
+  font-size: 32rpx;
+  color: #718096;
+  margin-right: 16rpx;
+}
+
+.input {
+  flex: 1;
+  font-size: 32rpx;
+}
+
+.picker-value {
+  height: 88rpx;
+  background: #F8FAFC;
+  border-radius: 24rpx;
+  padding: 0 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 32rpx;
+  border: 1rpx solid #E2E8F0;
+}
+
+.arrow {
+  color: #A0AEC0;
+  font-size: 24rpx;
+}
+
+.bottom-action {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24rpx 40rpx;
+  background: #FFFFFF;
+  box-shadow: 0 -8rpx 32rpx rgba(0,0,0,0.05);
+}
+
+.btn-primary {
+  background: #FF6B6B;
+  color: #FFFFFF;
+  border-radius: 48rpx;
+  height: 96rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-primary[disabled] {
+  background: #A0AEC0;
+}

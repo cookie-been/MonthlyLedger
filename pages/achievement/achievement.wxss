@@ -1,0 +1,24 @@
+.achievement-page { min-height: 100vh; background: #F5F7FA; padding-bottom: 40rpx; }
+.achievement-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 120rpx 48rpx 80rpx; color: #FFFFFF; text-align: center;
+}
+.achievement-title { font-size: 48rpx; font-weight: 700; margin-bottom: 16rpx; }
+.achievement-desc { font-size: 28rpx; opacity: 0.9; }
+.achievement-card {
+  display: flex; align-items: center; background: #FFFFFF; margin: 0 40rpx 24rpx;
+  border-radius: 32rpx; padding: 32rpx; box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08); opacity: 0.5;
+}
+.achievement-card.unlocked { opacity: 1; }
+.achievement-icon {
+  width: 112rpx; height: 112rpx; background: #F8FAFC; border-radius: 28rpx;
+  display: flex; align-items: center; justify-content: center; font-size: 56rpx; margin-right: 28rpx;
+}
+.achievement-card.unlocked .achievement-icon { background: linear-gradient(135deg, #FFD700, #FFA500); }
+.achievement-info { flex: 1; }
+.achievement-name { font-size: 32rpx; font-weight: 600; margin-bottom: 8rpx; }
+.achievement-desc-item { font-size: 26rpx; color: #718096; }
+.achievement-status {
+  width: 64rpx; height: 64rpx; background: #4ECDC4; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 32rpx;
+}

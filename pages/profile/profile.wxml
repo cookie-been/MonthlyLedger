@@ -1,0 +1,47 @@
+<view class="profile-page">
+  <view class="profile-header">
+    <view class="avatar">👤</view>
+    <view class="user-info">
+      <view class="nickname">用户</view>
+      <view class="user-stats">已使用 {{useDays}} 天</view>
+    </view>
+  </view>
+  <view class="stats-grid">
+    <view class="stats-grid-item">
+      <view class="stats-grid-value primary">¥{{formatMoney(totalDebt)}}</view>
+      <view class="stats-grid-label">总负债</view>
+    </view>
+    <view class="stats-grid-item">
+      <view class="stats-grid-value success">{{clearedCount}}</view>
+      <view class="stats-grid-label">已清零</view>
+    </view>
+    <view class="stats-grid-item">
+      <view class="stats-grid-value warning">¥{{formatMoney(totalRepaid)}}</view>
+      <view class="stats-grid-label">累计还款</view>
+    </view>
+  </view>
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goSuggestion">
+      <view class="menu-icon">💡</view><view class="menu-text">还款建议</view><view class="menu-arrow">›</view>
+    </view>
+    <view class="menu-item" bindtap="goAchievement">
+      <view class="menu-icon">🏆</view><view class="menu-text">成就徽章</view><view class="menu-arrow">›</view>
+    </view>
+  </view>
+  <view class="menu-section">
+    <view class="menu-item" bindtap="exportData">
+      <view class="menu-icon">📤</view><view class="menu-text">导出数据</view><view class="menu-arrow">›</view>
+    </view>
+    <view class="menu-item" bindtap="importData">
+      <view class="menu-icon">📥</view><view class="menu-text">导入数据</view><view class="menu-arrow">›</view>
+    </view>
+  </view>
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goSettings">
+      <view class="menu-icon">⚙️</view><view class="menu-text">设置</view><view class="menu-arrow">›</view>
+    </view>
+    <view class="menu-item" bindtap="showAbout">
+      <view class="menu-icon">ℹ️</view><view class="menu-text">关于我们</view><view class="menu-arrow">›</view>
+    </view>
+  </view>
+</view>

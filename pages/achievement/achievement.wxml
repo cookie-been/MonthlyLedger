@@ -1,0 +1,14 @@
+<view class="achievement-page">
+  <view class="achievement-header">
+    <view class="achievement-title">成就徽章</view>
+    <view class="achievement-desc">坚持还款，解锁成就</view>
+  </view>
+  <view class="achievement-card {{item.unlocked?'unlocked':''}}" wx:for="{{achievements}}" wx:key="id">
+    <view class="achievement-icon">{{item.icon}}</view>
+    <view class="achievement-info">
+      <view class="achievement-name">{{item.name}}</view>
+      <view class="achievement-desc-item">{{item.desc}}</view>
+    </view>
+    <view class="achievement-status" wx:if="{{item.unlocked}}">✓</view>
+  </view>
+</view>

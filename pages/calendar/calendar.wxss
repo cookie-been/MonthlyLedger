@@ -1,0 +1,35 @@
+.calendar-page { min-height: 100vh; background: #F5F7FA; }
+.calendar-header {
+  background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+  padding: 120rpx 48rpx 80rpx;
+  color: #FFFFFF;
+}
+.calendar-title { font-size: 48rpx; font-weight: 700; margin-bottom: 16rpx; }
+.calendar-grid {
+  background: #FFFFFF;
+  margin: -40rpx 40rpx 40rpx;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+}
+.calendar-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40rpx; }
+.calendar-month { font-size: 36rpx; font-weight: 600; }
+.calendar-nav-btn {
+  width: 72rpx; height: 72rpx; background: #F8FAFC; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.calendar-weekdays { display: flex; text-align: center; margin-bottom: 24rpx; }
+.weekday { flex: 1; font-size: 24rpx; color: #A0AEC0; padding: 16rpx 0; }
+.calendar-days { display: flex; flex-wrap: wrap; }
+.calendar-day {
+  width: 14.28%;
+  aspect-ratio: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: 20rpx; font-size: 28rpx;
+}
+.calendar-day.today { background: #FF6B6B; color: #FFFFFF; font-weight: 600; }
+.calendar-day.has-repay { background: #FFF5F5; color: #FF6B6B; }
+.calendar-day.empty { pointer-events: none; }
+.calendar-legend { display: flex; justify-content: center; gap: 48rpx; margin: 0 40rpx 40rpx; padding: 32rpx; background: #FFFFFF; border-radius: 24rpx; }
+.calendar-legend-item { display: flex; align-items: center; gap: 12rpx; font-size: 26rpx; color: #718096; }
+.calendar-legend-dot { width: 20rpx; height: 20rpx; border-radius: 50%; }

@@ -1,0 +1,83 @@
+<view class="detail-page">
+  <view class="detail-header">
+    <view class="detail-back" bindtap="goBack">← 返回</view>
+    <view class="detail-title">{{channel.name}}</view>
+    <view class="detail-amount">¥ {{formatMoney(channel.remaining)}}</view>
+    <view class="detail-progress">
+      <view class="detail-progress-fill" style="width: {{channel.progress}}%"></view>
+    </view>
+  </view>
+
+  <view class="detail-info">
+    <view class="detail-row">
+      <text class="detail-label">总欠款</text>
+      <text class="detail-value">¥ {{formatMoney(channel.totalAmount)}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">已还</text>
+      <text class="detail-value">¥ {{formatMoney(channel.totalAmount - channel.remaining)}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">每月应还</text>
+      <text class="detail-value">¥ {{formatMoney(channel.monthlyPayment)}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">还款日</text>
+      <text class="detail-value">每月{{channel.repaymentDay}}日</text>
+    </view>
+    <view class="detail-row" wx:if="{{channel.totalPeriods > 0}}">
+      <text class="detail-label">分期进度</text>
+      <text class="detail-value">{{channel.paidPeriods}}/{{channel.totalPeriods}}期</text>
+    </view>
+    <view class="detail-row" wx:if="{{channel.interestRate > 0}}">
+      <text class="detail-label">年利率</text>
+      <text class="detail-value">{{channel.interestRate}}%</text>
+    </view>
+  </view>
+
+  <view class="suggestion-section" wx:if="{{channel.remaining > 0}}">
+    <view class="suggestion-title">💡 还款建议</view>
+    <view class="suggestion-card">
+      <view class="suggestion-card-header">
+        <text class="suggestion-card-name">推荐还款</text>
+        <text class="suggestion-card-tag snowball">本月应还</text>
+      </view>
+      <view class="suggestion-card-desc">建议还款金额：¥{{formatMoney(channel.monthlyPayment)}}</view>
+      <view class="suggestion-card-reason">还款日：每月{{channel.repaymentDay}}日</view>
+    </view>
+  </view>
+
+  <view class="timeline-section" wx:if="{{channel.totalPeriods > 0}}">
+    <view class="timeline-title">分期进度</view>
+    <view class="timeline-item {{i <= channel.paidPeriods ? 'completed' : (i === channel.paidPeriods + 1 ? 'current' : '')}}" wx:for="{{channel.totalPeriods}}" wx:key="*this" wx:for-item="i">
+      <view class="timeline-dot">{{i <= channel.paidPeriods ? '✓' : ''}}</view>
+      <view class="timeline-line" wx:if="{{i < channel.totalPeriods}}"></view>
+      <view class="timeline-content">
+        <view class="timeline-period">第{{i}}期 {{i <= channel.paidPeriods ? '已还' : (i === channel.paidPeriods + 1 ? '进行中' : '待还')}}</view>
+        <view class="timeline-amount">¥ {{formatMoney(channel.monthlyPayment)}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="detail-actions">
+    <button class="btn-secondary" bindtap="editChannel">编辑</button>
+    <button class="btn-primary" bindtap="openRepayModal">立即还款</button>
+  </view>
+
+  <view class="modal {{showRepayModal ? 'active' : ''}}" bindtap="closeRepayModal">
+    <view class="modal-content" catchtap="">
+      <view class="modal-title">还款</view>
+      <view style="text-align:center; font-size:28rpx; color:#718096; margin-bottom:32rpx;">{{channel.name}} - 剩余 ¥{{formatMoney(channel.remaining)}}</view>
+      <view class="form-group">
+        <text class="form-label">还款金额</text>
+        <input class="form-input" type="digit" value="{{repayAmount}}" bindinput="onRepayInput" placeholder="0.00"/>
+      </view>
+      <view class="form-group">
+        <text class="form-label">备注（可选）</text>
+        <input class="form-input" value="{{repayNote}}" bindinput="onNoteInput" placeholder="如：第一期"/>
+      </view>
+      <button class="btn-primary" bindtap="confirmRepay">确认还款</button>
+      <button class="btn-secondary" bindtap="closeRepayModal" style="margin-top:24rpx;">取消</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,28 @@
+<view class="calendar-page">
+  <view class="calendar-header">
+    <view class="calendar-title">还款日历</view>
+    <view style="font-size:28rpx;opacity:0.9;">清晰规划每月还款计划</view>
+  </view>
+  <view class="calendar-grid">
+    <view class="calendar-nav">
+      <view class="calendar-nav-btn" bindtap="prevMonth">◀</view>
+      <view class="calendar-month">{{calendarTitle}}</view>
+      <view class="calendar-nav-btn" bindtap="nextMonth">▶</view>
+    </view>
+    <view class="calendar-weekdays">
+      <view class="weekday">日</view><view class="weekday">一</view><view class="weekday">二</view>
+      <view class="weekday">三</view><view class="weekday">四</view><view class="weekday">五</view><view class="weekday">六</view>
+    </view>
+    <view class="calendar-days">
+      <view class="calendar-day empty" wx:for="{{emptyDays}}" wx:key="*this"></view>
+      <view class="calendar-day {{item.isToday?'today':''}} {{item.hasRepay?'has-repayment':''}}" wx:for="{{days}}" wx:key="day" bindtap="onDayTap" data-day="{{item.day}}">
+        <text>{{item.day}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="calendar-legend">
+    <view class="calendar-legend-item"><view class="calendar-legend-dot" style="background:#FF6B6B"></view>待还款</view>
+    <view class="calendar-legend-item"><view class="calendar-legend-dot" style="background:#4ECDC4"></view>已还款</view>
+    <view class="calendar-legend-item"><view class="calendar-legend-dot" style="background:#FF6B6B"></view>今天</view>
+  </view>
+</view>

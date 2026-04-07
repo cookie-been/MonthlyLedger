@@ -1,0 +1,38 @@
+<view class="record-page">
+  <view class="record-header">
+    <view class="record-title">还款记录</view>
+    <view style="font-size:28rpx;opacity:0.9;">查看历史还款明细</view>
+    <view class="record-stats">
+      <view class="record-stat">
+        <view class="record-stat-label">累计还款</view>
+        <view class="record-stat-value">¥{{formatMoney(totalRepaid)}}</view>
+      </view>
+      <view class="record-stat">
+        <view class="record-stat-label">本月还款</view>
+        <view class="record-stat-value">¥{{formatMoney(monthRepaid)}}</view>
+      </view>
+      <view class="record-stat">
+        <view class="record-stat-label">已清零</view>
+        <view class="record-stat-value">{{clearedCount}}个</view>
+      </view>
+    </view>
+  </view>
+  <view class="filter-bar">
+    <view class="filter-item {{filterType==='all'?'active':''}}" bindtap="setFilter" data-type="all">全部</view>
+    <view class="filter-item {{filterType==='month'?'active':''}}" bindtap="setFilter" data-type="month">本月</view>
+    <view class="filter-item {{filterType==='year'?'active':''}}" bindtap="setFilter" data-type="year">本年</view>
+  </view>
+  <view wx:if="{{filteredRecords.length === 0}}" class="empty-state">
+    <view class="empty-icon">📋</view>
+    <view class="empty-text">暂无还款记录</view>
+  </view>
+  <view class="record-item" wx:for="{{filteredRecords}}" wx:key="id" bindtap="goDetail" data-id="{{item.channelId}}">
+    <view class="record-icon">✓</view>
+    <view class="record-info">
+      <view class="record-channel">{{item.name}}</view>
+      <view class="record-time">{{item.time}}</view>
+      <view class="record-note" wx:if="{{item.note}}">{{item.note}}</view>
+    </view>
+    <view class="record-amount">-¥{{formatMoney(item.amount)}}</view>
+  </view>
+</view>
