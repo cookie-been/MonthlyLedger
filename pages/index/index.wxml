@@ -1,7 +1,7 @@
 <view class="index-page">
   <view class="home-header">
     <view class="header-top">
-      <view class="header-title">月月账单</view>
+      <view class="header-title">月月账单👑</view>
       <view class="header-actions">
         <view class="header-btn" bindtap="showNotifications">🔔</view>
         <view class="header-btn" bindtap="goSettings">⚙️</view>
