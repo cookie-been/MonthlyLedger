@@ -1,5 +1,4 @@
-var app = getApp()
-var util = require('../../utils/util.js')
+var util = require('./utils/util.js')
 
 App({
   globalData: {

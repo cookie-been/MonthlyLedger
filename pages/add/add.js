@@ -13,6 +13,7 @@ Page({
     },
     isEdit: false,
     editId: null,
+    canSave: false,
     dayOptions: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日'],
     dayIndex: 9
   },
@@ -41,19 +42,30 @@ Page({
             repaymentDay: ch.repaymentDay,
             interestRate: ch.interestRate ? String(ch.interestRate) : ''
           },
-          dayIndex: ch.repaymentDay - 1
+          dayIndex: ch.repaymentDay - 1,
+          canSave: true
         })
         wx.setNavigationBarTitle({ title: '编辑负债' })
       }
     }
   },
 
+  checkCanSave: function() {
+    var f = this.data.form
+    var name = f.name.replace(/^\s+|\s+$/g, '')
+    var total = parseFloat(f.totalAmount) || 0
+    var canSave = name.length > 0 && total > 0
+    this.setData({ canSave: canSave })
+  },
+
   onNameInput: function(e) {
     this.setData({ 'form.name': e.detail.value })
+    this.checkCanSave()
   },
 
   onTotalInput: function(e) {
     this.setData({ 'form.totalAmount': e.detail.value })
+    this.checkCanSave()
   },
 
   onMonthlyInput: function(e) {
