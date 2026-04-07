@@ -1,4 +1,4 @@
-const app = getApp()
+var app = getApp()
 
 Page({
   data: {
@@ -8,35 +8,44 @@ Page({
     useDays: 0
   },
 
-  onShow() {
-    const channels = app.globalData.channels || []
-    const totalDebt = channels.reduce((s, c) => s + c.remaining, 0)
-    const totalOrig = channels.reduce((s, c) => s + c.totalAmount, 0)
-    const totalRepaid = totalOrig - totalDebt
-    const clearedCount = channels.filter(c => c.remaining === 0).length
-    const createdAt = app.globalData.createdAt || new Date().toISOString()
-    const useDays = Math.floor((Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60 * 24)) + 1
+  onShow: function() {
+    var channels = app.globalData.channels || []
+    var totalDebt = 0
+    var totalOrig = 0
+    var clearedCount = 0
 
-    this.setData({ totalDebt, totalRepaid, clearedCount, useDays })
+    for (var i = 0; i < channels.length; i++) {
+      totalDebt += channels[i].remaining
+      totalOrig += channels[i].totalAmount
+      if (channels[i].remaining === 0) {
+        clearedCount++
+      }
+    }
+
+    var totalRepaid = totalOrig - totalDebt
+    var createdAt = app.globalData.createdAt || new Date().toISOString()
+    var useDays = Math.floor((Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60 * 24)) + 1
+
+    this.setData({ totalDebt: totalDebt, totalRepaid: totalRepaid, clearedCount: clearedCount, useDays: useDays })
   },
 
-  formatMoney(n) {
+  formatMoney: function(n) {
     return (n || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   },
 
-  goSuggestion() {
+  goSuggestion: function() {
     wx.navigateTo({ url: '/pages/suggestion/suggestion' })
   },
 
-  goAchievement() {
+  goAchievement: function() {
     wx.navigateTo({ url: '/pages/achievement/achievement' })
   },
 
-  goSettings() {
+  goSettings: function() {
     wx.navigateTo({ url: '/pages/settings/settings' })
   },
 
-  showAbout() {
+  showAbout: function() {
     wx.showModal({
       title: '关于我们',
       content: '负债管理 v2.0.0\n致力于帮助用户轻松管理债务，早日实现财务自由。',
@@ -44,8 +53,8 @@ Page({
     })
   },
 
-  exportData() {
-    const data = JSON.stringify({
+  exportData: function() {
+    var data = JSON.stringify({
       channels: app.globalData.channels,
       records: app.globalData.records,
       settings: app.globalData.settings,
@@ -54,27 +63,33 @@ Page({
     }, null, 2)
 
     wx.setClipboardData({
-      data,
-      success: () => {
+      data: data,
+      success: function() {
         wx.showToast({ title: '数据已复制到剪贴板', icon: 'success' })
       }
     })
   },
 
-  importData() {
+  importData: function() {
+    var that = this
     wx.showModal({
       title: '导入数据',
       content: '请粘贴JSON数据到剪贴板后点击确定',
-      success: (res) => {
+      success: function(res) {
         if (res.confirm) {
           wx.getClipboardData({
-            success: (clip) => {
+            success: function(clip) {
               try {
-                const data = JSON.parse(clip.data)
+                var data = JSON.parse(clip.data)
                 if (data.channels) {
                   app.globalData.channels = data.channels
                   app.globalData.records = data.records || []
-                  if (data.settings) app.globalData.settings = { ...app.globalData.settings, ...data.settings }
+                  if (data.settings) {
+                    var settings = app.globalData.settings
+                    for (var key in data.settings) {
+                      settings[key] = data.settings[key]
+                    }
+                  }
                   if (data.achievements) app.globalData.achievements = data.achievements
                   app.saveData()
                   wx.showToast({ title: '导入成功', icon: 'success' })

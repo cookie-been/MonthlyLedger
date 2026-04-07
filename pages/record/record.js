@@ -1,4 +1,4 @@
-const app = getApp()
+var app = getApp()
 
 Page({
   data: {
@@ -10,49 +10,75 @@ Page({
     clearedCount: 0
   },
 
-  onShow() {
+  onShow: function() {
     this.loadData()
   },
 
-  loadData() {
-    const records = app.globalData.records || []
-    const channels = app.globalData.channels || []
-    const now = new Date()
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-    const startOfYear = new Date(now.getFullYear(), 0, 1)
+  loadData: function() {
+    var records = app.globalData.records || []
+    var channels = app.globalData.channels || []
+    var now = new Date()
+    var startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+    var startOfYear = new Date(now.getFullYear(), 0, 1)
 
-    const totalRepaid = records.reduce((s, r) => s + r.amount, 0)
-    const monthRepaid = records.filter(r => new Date(r.time) >= startOfMonth).reduce((s, r) => s + r.amount, 0)
-    const clearedCount = channels.filter(c => c.remaining === 0).length
+    var totalRepaid = 0
+    var monthRepaid = 0
+    var clearedCount = 0
 
-    this.setData({ records, totalRepaid, monthRepaid, clearedCount })
+    for (var i = 0; i < records.length; i++) {
+      totalRepaid += records[i].amount
+      if (new Date(records[i].time) >= startOfMonth) {
+        monthRepaid += records[i].amount
+      }
+    }
+
+    for (var j = 0; j < channels.length; j++) {
+      if (channels[j].remaining === 0) {
+        clearedCount++
+      }
+    }
+
+    this.setData({ records: records, totalRepaid: totalRepaid, monthRepaid: monthRepaid, clearedCount: clearedCount })
     this.applyFilter()
   },
 
-  applyFilter() {
-    const { records, filterType } = this.data
-    const now = new Date()
-    let filtered = records
+  applyFilter: function() {
+    var records = this.data.records
+    var filterType = this.data.filterType
+    var now = new Date()
+    var filtered = records
+
     if (filterType === 'month') {
-      const start = new Date(now.getFullYear(), now.getMonth(), 1)
-      filtered = records.filter(r => new Date(r.time) >= start)
+      var start = new Date(now.getFullYear(), now.getMonth(), 1)
+      filtered = []
+      for (var i = 0; i < records.length; i++) {
+        if (new Date(records[i].time) >= start) {
+          filtered.push(records[i])
+        }
+      }
     } else if (filterType === 'year') {
-      const start = new Date(now.getFullYear(), 0, 1)
-      filtered = records.filter(r => new Date(r.time) >= start)
+      var startYear = new Date(now.getFullYear(), 0, 1)
+      filtered = []
+      for (var j = 0; j < records.length; j++) {
+        if (new Date(records[j].time) >= startYear) {
+          filtered.push(records[j])
+        }
+      }
     }
+
     this.setData({ filteredRecords: filtered })
   },
 
-  setFilter(e) {
+  setFilter: function(e) {
     this.setData({ filterType: e.currentTarget.dataset.type })
     this.applyFilter()
   },
 
-  formatMoney(n) {
+  formatMoney: function(n) {
     return (n || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   },
 
-  goDetail(e) {
-    wx.navigateTo({ url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}` })
+  goDetail: function(e) {
+    wx.navigateTo({ url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id })
   }
 })

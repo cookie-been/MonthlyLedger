@@ -1,4 +1,4 @@
-const app = getApp()
+var app = getApp()
 
 Page({
   data: {
@@ -8,11 +8,18 @@ Page({
     repayNote: ''
   },
 
-  onLoad(options) {
-    const id = parseInt(options.id)
-    const channel = app.globalData.channels.find(c => c.id === id)
+  onLoad: function(options) {
+    var id = parseInt(options.id)
+    var channels = app.globalData.channels
+    var channel = null
+    for (var i = 0; i < channels.length; i++) {
+      if (channels[i].id === id) {
+        channel = channels[i]
+        break
+      }
+    }
     if (channel) {
-      this.setData({ channel })
+      this.setData({ channel: channel })
       wx.setNavigationBarTitle({ title: channel.name })
     }
     if (options.action === 'repay') {
@@ -20,19 +27,19 @@ Page({
     }
   },
 
-  formatMoney(n) {
+  formatMoney: function(n) {
     return (n || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   },
 
-  goBack() {
+  goBack: function() {
     wx.navigateBack()
   },
 
-  editChannel() {
-    wx.navigateTo({ url: `/pages/add/add?id=${this.data.channel.id}` })
+  editChannel: function() {
+    wx.navigateTo({ url: '/pages/add/add?id=' + this.data.channel.id })
   },
 
-  openRepayModal() {
+  openRepayModal: function() {
     this.setData({
       showRepayModal: true,
       repayAmount: String(this.data.channel.monthlyPayment),
@@ -40,21 +47,22 @@ Page({
     })
   },
 
-  closeRepayModal() {
+  closeRepayModal: function() {
     this.setData({ showRepayModal: false })
   },
 
-  onRepayInput(e) {
+  onRepayInput: function(e) {
     this.setData({ repayAmount: e.detail.value })
   },
 
-  onNoteInput(e) {
+  onNoteInput: function(e) {
     this.setData({ repayNote: e.detail.value })
   },
 
-  confirmRepay() {
-    const amount = parseFloat(this.data.repayAmount) || 0
-    const note = this.data.repayNote.trim()
+  confirmRepay: function() {
+    var amount = parseFloat(this.data.repayAmount) || 0
+    var rawNote = this.data.repayNote || ''
+    var note = rawNote.replace(/^\s+|\s+$/g, '')
     
     if (amount <= 0) {
       wx.showToast({ title: '请输入还款金额', icon: 'none' })
@@ -65,30 +73,38 @@ Page({
       return
     }
 
-    const channel = this.data.channel
+    var channel = this.data.channel
     channel.remaining = Math.max(0, channel.remaining - amount)
     channel.progress = Math.round(((channel.totalAmount - channel.remaining) / channel.totalAmount) * 100)
     if (channel.totalPeriods > 0) {
       channel.paidPeriods = Math.min(channel.totalPeriods, channel.paidPeriods + 1)
     }
 
+    var now = new Date()
+    var timeStr = now.getFullYear() + '-' + 
+      (now.getMonth() + 1 < 10 ? '0' : '') + (now.getMonth() + 1) + '-' + 
+      (now.getDate() < 10 ? '0' : '') + now.getDate() + ' ' +
+      (now.getHours() < 10 ? '0' : '') + now.getHours() + ':' +
+      (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ':' +
+      (now.getSeconds() < 10 ? '0' : '') + now.getSeconds()
+
     app.globalData.records.unshift({
       id: Date.now(),
       channelId: channel.id,
       name: channel.name,
-      amount,
-      time: new Date().toLocaleString('zh-CN', { hour12: false }).replace(/\//g, '-'),
-      note
+      amount: amount,
+      time: timeStr,
+      note: note
     })
 
     app.saveData()
-    this.setData({ channel, showRepayModal: false })
+    this.setData({ channel: channel, showRepayModal: false })
 
     if (channel.remaining === 0) {
       this.checkAchievements()
       wx.showModal({
         title: '🎉 恭喜！',
-        content: `${channel.name} 已还清！`,
+        content: channel.name + ' 已还清！',
         showCancel: false
       })
     } else {
@@ -96,14 +112,25 @@ Page({
     }
   },
 
-  checkAchievements() {
-    const achievements = app.globalData.achievements
-    const newOnes = []
-    if (!achievements.includes('first_clear')) newOnes.push('first_clear')
-    const remaining = app.globalData.channels.reduce((s, c) => s + c.remaining, 0)
-    if (remaining === 0 && !achievements.includes('all_clear')) newOnes.push('all_clear')
+  checkAchievements: function() {
+    var achievements = app.globalData.achievements
+    var newOnes = []
+    var hasFirstClear = false
+    var hasAllClear = false
+    for (var i = 0; i < achievements.length; i++) {
+      if (achievements[i] === 'first_clear') hasFirstClear = true
+      if (achievements[i] === 'all_clear') hasAllClear = true
+    }
+    if (!hasFirstClear) newOnes.push('first_clear')
+    
+    var remaining = 0
+    for (var j = 0; j < app.globalData.channels.length; j++) {
+      remaining += app.globalData.channels[j].remaining
+    }
+    if (remaining === 0 && !hasAllClear) newOnes.push('all_clear')
+    
     if (newOnes.length > 0) {
-      app.globalData.achievements = [...achievements, ...newOnes]
+      app.globalData.achievements = achievements.concat(newOnes)
       app.saveData()
     }
   }

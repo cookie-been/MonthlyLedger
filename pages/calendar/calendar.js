@@ -1,63 +1,88 @@
-const app = getApp()
+var app = getApp()
 
 Page({
   data: {
+    year: 0,
+    month: 0,
     calendarTitle: '',
     emptyDays: [],
     days: [],
     repaymentDays: []
   },
 
-  onShow() {
+  onShow: function() {
+    var now = new Date()
+    this.setData({ year: now.getFullYear(), month: now.getMonth() })
     this.renderCalendar()
   },
 
-  renderCalendar() {
-    const now = new Date()
-    const year = this.data.year || now.getFullYear()
-    const month = this.data.month !== undefined ? this.data.month : now.getMonth()
+  renderCalendar: function() {
+    var year = this.data.year
+    var month = this.data.month
     
-    this.setData({ year, month })
+    var title = year + '年' + (month + 1) + '月'
+    var firstDay = new Date(year, month, 1).getDay()
+    var daysInMonth = new Date(year, month + 1, 0).getDate()
+    var today = new Date()
     
-    const title = `${year}年${month + 1}月`
-    const firstDay = new Date(year, month, 1).getDay()
-    const daysInMonth = new Date(year, month + 1, 0).getDate()
-    const today = new Date()
-    const repaymentDays = app.globalData.channels.filter(c => c.remaining > 0).map(c => c.repaymentDay)
+    var channels = app.globalData.channels
+    var repaymentDays = []
+    for (var i = 0; i < channels.length; i++) {
+      if (channels[i].remaining > 0) {
+        repaymentDays.push(channels[i].repaymentDay)
+      }
+    }
 
-    const emptyDays = Array.from({length: firstDay}, (_, i) => i)
-    const days = Array.from({length: daysInMonth}, (_, i) => {
-      const day = i + 1
-      const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear()
-      const hasRepay = repaymentDays.includes(day)
-      return { day, isToday, hasRepay }
-    })
+    var emptyDays = []
+    for (var e = 0; e < firstDay; e++) {
+      emptyDays.push(e)
+    }
+    
+    var days = []
+    for (var d = 1; d <= daysInMonth; d++) {
+      var isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear()
+      var hasRepay = false
+      for (var j = 0; j < repaymentDays.length; j++) {
+        if (repaymentDays[j] === d) {
+          hasRepay = true
+          break
+        }
+      }
+      days.push({ day: d, isToday: isToday, hasRepay: hasRepay })
+    }
 
-    this.setData({ calendarTitle: title, emptyDays, days })
+    this.setData({ calendarTitle: title, emptyDays: emptyDays, days: days })
   },
 
-  prevMonth() {
-    let { year, month } = this.data
+  prevMonth: function() {
+    var year = this.data.year
+    var month = this.data.month
     if (month === 0) { month = 11; year-- } else { month-- }
-    this.setData({ year, month })
+    this.setData({ year: year, month: month })
     this.renderCalendar()
   },
 
-  nextMonth() {
-    let { year, month } = this.data
+  nextMonth: function() {
+    var year = this.data.year
+    var month = this.data.month
     if (month === 11) { month = 0; year++ } else { month++ }
-    this.setData({ year, month })
+    this.setData({ year: year, month: month })
     this.renderCalendar()
   },
 
-  onDayTap(e) {
-    const day = e.currentTarget.dataset.day
-    const channels = app.globalData.channels.filter(c => c.repaymentDay === day && c.remaining > 0)
-    if (channels.length === 0) return
-    const names = channels.map(c => c.name).join('、')
+  onDayTap: function(e) {
+    var day = e.currentTarget.dataset.day
+    var channels = app.globalData.channels
+    var names = []
+    for (var i = 0; i < channels.length; i++) {
+      if (channels[i].repaymentDay === day && channels[i].remaining > 0) {
+        names.push(channels[i].name)
+      }
+    }
+    if (names.length === 0) return
     wx.showModal({
-      title: `${this.data.month + 1}月${day}日 还款任务`,
-      content: names,
+      title: (this.data.month + 1) + '月' + day + '日 还款任务',
+      content: names.join('、'),
       showCancel: false
     })
   }
