@@ -11,7 +11,7 @@
 
   <view class="main-card">
     <view class="main-card-header">
-      <view class="main-card-label">总负债</view>
+      <view class="main-card-label">总账单</view>
       <view class="hide-btn" bindtap="toggleAmount">{{hideAmount ? '👁️‍🗨️' : '👁️'}}</view>
     </view>
     <view class="main-amount">
@@ -28,7 +28,7 @@
         <view class="data-item-value">{{clearDays}}天</view>
       </view>
       <view class="data-item">
-        <view class="data-item-label">负债渠道</view>
+        <view class="data-item-label">账单渠道</view>
         <view class="data-item-value">{{activeCount}}个</view>
       </view>
     </view>
@@ -113,7 +113,7 @@
 
   <view class="section">
     <view class="section-header">
-      <view class="section-title">我的负债</view>
+      <view class="section-title">我的账单</view>
       <view class="sort-btn" bindtap="toggleSort">
         <text>{{sortLabel}}</text>
         <text>▼</text>
@@ -122,8 +122,8 @@
 
     <view wx:if="{{sortedChannels.length === 0}}" class="empty-state">
       <view class="empty-icon">💰</view>
-      <view class="empty-text">暂无负债记录</view>
-      <view class="empty-hint">点击下方按钮添加您的第一笔负债</view>
+      <view class="empty-text">暂无账单记录</view>
+      <view class="empty-hint">点击下方按钮添加您的第一笔账单</view>
     </view>
 
     <view class="channel-card" wx:for="{{sortedChannels}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}" bindlongpress="showQuickMenu" data-channel="{{item}}">

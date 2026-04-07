@@ -8,8 +8,7 @@
       <text class="form-label">渠道类型 <text style="color:#FF6B6B;">*</text></text>
       <view class="type-options">
         <view class="type-option {{form.type==='credit_card'?'active':''}}" bindtap="selectType" data-type="credit_card">💳 信用卡</view>
-        <view class="type-option {{form.type==='huabei'?'active':''}}" bindtap="selectType" data-type="huabei">📱 花呗</view>
-        <view class="type-option {{form.type==='jiebei'?'active':''}}" bindtap="selectType" data-type="jiebei">💵 借呗</view>
+        <view class="type-option {{form.type==='huabei'?'active':''}}" bindtap="selectType" data-type="huabei">🏦 银行</view>
         <view class="type-option {{form.type==='net_loan'?'active':''}}" bindtap="selectType" data-type="net_loan">🌐 网贷</view>
         <view class="type-option {{form.type==='other'?'active':''}}" bindtap="selectType" data-type="other">📋 其他</view>
       </view>
@@ -44,6 +43,6 @@
     </view>
   </view>
   <view class="bottom-action">
-    <button class="btn-primary" bindtap="saveChannel" disabled="{{!canSave}}">{{isEdit ? '保存修改' : '添加负债'}}</button>
+    <button class="btn-primary" bindtap="saveChannel" disabled="{{!canSave}}">{{isEdit ? '保存修改' : '添加账单'}}</button>
   </view>
 </view>

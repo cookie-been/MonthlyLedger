@@ -149,7 +149,7 @@ Page({
     else if (sortType === 'dateAsc') sorted.sort(function(a, b) { return a.repaymentDay - b.repaymentDay })
     else if (sortType === 'type') sorted.sort(function(a, b) { return a.type.localeCompare(b.type) })
 
-    var typeMap = { credit_card: '信用卡', huabei: '花呗', jiebei: '借呗', net_loan: '网贷', other: '其他' }
+    var typeMap = { credit_card: '信用卡', huabei: '银行', net_loan: '网贷', other: '其他' }
     var that = this
     sorted = sorted.map(function(c) {
       return { 

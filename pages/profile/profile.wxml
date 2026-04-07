@@ -12,7 +12,7 @@
   <view class="stats-grid">
     <view class="stats-grid-item">
       <view class="stats-grid-value primary">¥{{totalDebtDisplay}}</view>
-      <view class="stats-grid-label">总负债</view>
+      <view class="stats-grid-label">总账单</view>
     </view>
     <view class="stats-grid-item">
       <view class="stats-grid-value success">{{clearedCount}}</view>

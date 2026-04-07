@@ -45,7 +45,7 @@ Page({
           dayIndex: ch.repaymentDay - 1,
           canSave: true
         })
-        wx.setNavigationBarTitle({ title: '编辑负债' })
+        wx.setNavigationBarTitle({ title: '编辑账单' })
       }
     }
   },

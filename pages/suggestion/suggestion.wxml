@@ -39,7 +39,7 @@
   </view>
   <view class="summary-section">
     <view class="summary-item">
-      <view style="font-size:26rpx;color:#718096;margin-bottom:12rpx;">总负债</view>
+      <view style="font-size:26rpx;color:#718096;margin-bottom:12rpx;">总账单</view>
       <view style="font-size:36rpx;font-weight:700;">¥{{formatMoney(totalDebt)}}</view>
     </view>
     <view class="summary-item">

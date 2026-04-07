@@ -1,9 +1,9 @@
 <view class="splash-container">
   <view class="splash-content">
     <view class="splash-logo">💰</view>
-    <view class="splash-title">负债管理</view>
-    <view class="splash-subtitle">轻松管理你的债务</view>
+    <view class="splash-title">月月账单</view>
+    <view class="splash-subtitle">轻松管理你的账单</view>
     <view class="loading-spinner"></view>
-    <view class="splash-version">v2.0.0</view>
+    <view class="splash-version">v1.0.0</view>
   </view>
 </view>

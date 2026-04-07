@@ -115,8 +115,7 @@ Page({
   getTypeName: function(type) {
     var typeMap = {
       'credit_card': '信用卡',
-      'huabei': '花呗',
-      'jiebei': '借呗',
+      'huabei': '银行',
       'net_loan': '网贷',
       'other': '其他'
     }

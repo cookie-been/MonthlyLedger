@@ -48,10 +48,10 @@ Page({
 
     var list = [
       { id: 'first_repay', name: '首次还款', desc: '完成第一次还款', icon: '🎯' },
-      { id: 'first_clear', name: '还清第一个渠道', desc: '完全还清一个负债渠道', icon: '🏆' },
-      { id: 'half_paid', name: '负债减半', desc: '总负债减少50%', icon: '💪' },
+      { id: 'first_clear', name: '还清第一个渠道', desc: '完全还清一个账单渠道', icon: '🏆' },
+      { id: 'half_paid', name: '账单减半', desc: '总账单减少50%', icon: '💪' },
       { id: 'streak_3', name: '连续还款达人', desc: '连续3个月按时还款', icon: '🔥' },
-      { id: 'all_clear', name: '财务自由', desc: '还清所有负债', icon: '🎉' }
+      { id: 'all_clear', name: '财务自由', desc: '还清所有账单', icon: '🎉' }
     ]
 
     var achievements = []
