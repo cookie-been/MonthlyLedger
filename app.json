@@ -12,6 +12,7 @@
     "pages/settings/settings",
     "pages/splash/splash"
   ],
+  "lazyCodeLoading": "requiredComponents",
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "月月账单",
