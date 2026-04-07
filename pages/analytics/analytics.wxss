@@ -1,0 +1,316 @@
+.analytics-page {
+  padding: 24rpx;
+  background: #F5F7FA;
+  min-height: 100vh;
+}
+
+.section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2D3748;
+  margin-bottom: 24rpx;
+}
+
+.warning-title {
+  color: #E53E3E;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.stats-row:last-child {
+  margin-bottom: 0;
+}
+
+.stat-card {
+  flex: 1;
+  background: #F7FAFC;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  text-align: center;
+  margin: 0 8rpx;
+}
+
+.stat-card:first-child {
+  margin-left: 0;
+}
+
+.stat-card:last-child {
+  margin-right: 0;
+}
+
+.stat-card.primary {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+}
+
+.stat-card.primary .stat-value,
+.stat-card.primary .stat-label {
+  color: #fff;
+}
+
+.stat-card.success {
+  background: linear-gradient(135deg, #4ECDC4 0%, #6EE7DE 100%);
+}
+
+.stat-card.success .stat-value,
+.stat-card.success .stat-label {
+  color: #fff;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #2D3748;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #718096;
+}
+
+.progress-section {
+  margin-top: 16rpx;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+  font-size: 28rpx;
+  color: #4A5568;
+}
+
+.progress-percent {
+  color: #FF6B6B;
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 16rpx;
+  background: #E2E8F0;
+  border-radius: 8rpx;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF6B6B 0%, #FF8E8E 100%);
+  border-radius: 8rpx;
+  transition: width 0.3s;
+}
+
+.progress-info {
+  font-size: 24rpx;
+  color: #A0AEC0;
+  text-align: right;
+}
+
+.channel-card {
+  background: #FFF5F5;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  border-left: 6rpx solid #FF6B6B;
+}
+
+.channel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.channel-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2D3748;
+}
+
+.channel-type {
+  font-size: 24rpx;
+  color: #718096;
+  background: #EDF2F7;
+  padding: 4rpx 16rpx;
+  border-radius: 16rpx;
+}
+
+.channel-stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.channel-stat {
+  text-align: center;
+}
+
+.channel-stat .label {
+  display: block;
+  font-size: 24rpx;
+  color: #718096;
+  margin-bottom: 8rpx;
+}
+
+.channel-stat .value {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2D3748;
+}
+
+.channel-stat .value.danger {
+  color: #E53E3E;
+}
+
+.distribution-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.distribution-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dist-left {
+  display: flex;
+  flex-direction: column;
+  width: 160rpx;
+}
+
+.dist-name {
+  font-size: 28rpx;
+  color: #2D3748;
+  margin-bottom: 4rpx;
+}
+
+.dist-amount {
+  font-size: 24rpx;
+  color: #718096;
+}
+
+.dist-right {
+  flex: 1;
+  margin-left: 24rpx;
+  display: flex;
+  align-items: center;
+}
+
+.dist-bar-bg {
+  flex: 1;
+  height: 16rpx;
+  background: #E2E8F0;
+  border-radius: 8rpx;
+  overflow: hidden;
+  margin-right: 16rpx;
+}
+
+.dist-bar-fill {
+  height: 100%;
+  background: #FF6B6B;
+  border-radius: 8rpx;
+}
+
+.dist-percent {
+  font-size: 24rpx;
+  color: #718096;
+  width: 60rpx;
+  text-align: right;
+}
+
+.warning-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.warning-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 20rpx;
+  background: #FFF5F5;
+  border-radius: 8rpx;
+}
+
+.warning-name {
+  font-size: 28rpx;
+  color: #2D3748;
+}
+
+.warning-info {
+  font-size: 26rpx;
+}
+
+.warning-info .overdue,
+.warning-info .urgent {
+  color: #E53E3E;
+  font-weight: 600;
+}
+
+.warning-info .warning {
+  color: #DD6B20;
+}
+
+.record-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #EDF2F7;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-name {
+  font-size: 28rpx;
+  color: #2D3748;
+  margin-bottom: 4rpx;
+}
+
+.record-note {
+  font-size: 24rpx;
+  color: #A0AEC0;
+}
+
+.record-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.record-amount {
+  font-size: 28rpx;
+  color: #4ECDC4;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.record-time {
+  font-size: 24rpx;
+  color: #A0AEC0;
+}

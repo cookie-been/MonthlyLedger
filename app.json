@@ -4,11 +4,12 @@
     "pages/detail/detail",
     "pages/add/add",
     "pages/calendar/calendar",
-    "pages/record/record",
+    "pages/analytics/analytics",
     "pages/profile/profile",
     "pages/suggestion/suggestion",
     "pages/achievement/achievement",
-    "pages/settings/settings"
+    "pages/settings/settings",
+    "pages/record/record"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -35,10 +36,10 @@
         "selectedIconPath": "images/calendar-active.png"
       },
       {
-        "pagePath": "pages/record/record",
-        "text": "记录",
-        "iconPath": "images/record.png",
-        "selectedIconPath": "images/record-active.png"
+        "pagePath": "pages/analytics/analytics",
+        "text": "分析",
+        "iconPath": "images/analytics.png",
+        "selectedIconPath": "images/analytics-active.png"
       },
       {
         "pagePath": "pages/profile/profile",
