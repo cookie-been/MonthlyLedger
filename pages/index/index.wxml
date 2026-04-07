@@ -3,6 +3,7 @@
     <view class="header-top">
       <view class="header-title">负债管理</view>
       <view class="header-actions">
+        <view class="header-btn" bindtap="showToast">🔔</view>
         <view class="header-btn" bindtap="goSettings">⚙️</view>
       </view>
     </view>
