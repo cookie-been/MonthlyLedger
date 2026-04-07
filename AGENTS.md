@@ -4,7 +4,7 @@
 **Type:** WeChat Mini-program (微信小程序)
 
 ## OVERVIEW
-微信小程序月月账单工具。支持信用卡、花呗、借呗、网贷等债务追踪，含还款日历、记录统计、成就系统。
+微信小程序月月账单工具。支持信用卡、银行、网贷等账单追踪，含还款日历、记录统计、成就系统。
 
 ## STRUCTURE
 ```
@@ -14,16 +14,16 @@
 ├── sitemap.json                  # 页面收录配置
 ├── utils/util.js                 # 工具函数：formatTime, parseDate
 ├── pages/
-│   ├── index/                    # 首页 - 负债列表、预警、统计
-│   ├── detail/                  # 详情页 - 负债详情 + 还款弹窗
-│   ├── add/                      # 添加/编辑负债表单
+│   ├── index/                    # 首页 - 账单列表、预警、统计
+│   ├── detail/                  # 详情页 - 账单详情 + 还款弹窗
+│   ├── add/                      # 添加/编辑账单表单
 │   ├── calendar/                # 日历页 - 还款日期视图
 │   ├── record/                  # 记录页 - 还款历史
 │   ├── analytics/              # 分析页 - 数据可视化
 │   ├── profile/                 # 我的页 - 头像昵称、统计、导出导入
 │   ├── achievement/            # 成就页 - 成就徽章
 │   ├── settings/                # 设置页 - 还款提醒、数据管理
-│   ├── suggestion/             # 反馈页 - 用户建议
+│   ├── suggestion/             # 反馈页 - 还款建议
 │   └── splash/                  # 启动页 - 1秒启动动画
 └── images/                       # TabBar图标、打赏收款码
 ```
@@ -31,7 +31,7 @@
 ## WHERE TO LOOK
 | Task | Location | Notes |
 |------|----------|-------|
-| 添加新负债 | `pages/add/add.js` | 新增负债渠道 |
+| 添加新账单 | `pages/add/add.js` | 新增账单渠道 |
 | 记录还款 | `pages/detail/detail.js` | 还款弹窗 + 记录写入 |
 | 查看历史 | `pages/record/record.js` | 还款记录列表 |
 | 数据存储 | `app.js` | `wx.getStorageSync('debt_data')` |
@@ -43,9 +43,9 @@
 
 ## DATA MODEL
 ```javascript
-// Channel (负债渠道)
+// Channel (账单渠道)
 {
-  id, name, type,           // 类型: credit_card/huabei/jiebei/net_loan/other
+  id, name, type,           // 类型: credit_card/huabei/net_loan/other
   totalAmount,             // 总金额
   monthlyPayment,         // 月还款额
   remaining,               // 剩余欠款
@@ -91,7 +91,7 @@
 
 ## BUILD CONFIG (project.config.json)
 - compileType: miniprogram
-- libVersion: 3.15.2
+- libVersion: 3.15.1
 - es6: true (但代码实际用ES5)
 - minifyWXSS: true, minifyWXML: true
 
@@ -101,3 +101,4 @@
 - 启动流程: splash(1秒) → index 首页
 - 版本: v1.0.0
 - 数据导出为 JSON 文件保存到 USER_DATA_PATH
+- 渠道类型: 信用卡、银行、网贷、其他
