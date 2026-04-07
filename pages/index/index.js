@@ -103,7 +103,7 @@ Page({
 
   generatePieData: function(channels) {
     var colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#95E1D3', '#F38181']
-    var typeNames = { credit_card: '信用卡', huabei: '花呗', jiebei: '借呗', net_loan: '网贷', other: '其他' }
+    var typeNames = { credit_card: '信用卡', huabei: '银行', net_loan: '网贷', other: '其他' }
     var total = 0
     var typeMap = {}
     for (var i = 0; i < channels.length; i++) {
