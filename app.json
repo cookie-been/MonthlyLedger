@@ -6,6 +6,7 @@
     "pages/calendar/calendar",
     "pages/record/record",
     "pages/profile/profile",
+    "pages/analytics/analytics",
     "pages/suggestion/suggestion",
     "pages/achievement/achievement",
     "pages/settings/settings",

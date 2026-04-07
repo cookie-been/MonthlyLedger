@@ -113,6 +113,10 @@ Page({
     return intPart + result + '.' + decimal
   },
 
+  goAnalytics: function() {
+    wx.navigateTo({ url: '/pages/analytics/analytics' })
+  },
+
   goSuggestion: function() {
     wx.navigateTo({ url: '/pages/suggestion/suggestion' })
   },

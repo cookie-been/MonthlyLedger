@@ -1,0 +1,122 @@
+<view class="analytics-page">
+  <view class="section">
+    <view class="section-title">概览</view>
+    <view class="stats-row">
+      <view class="stat-card primary">
+        <view class="stat-value">¥{{formatMoney(totalDebt)}}</view>
+        <view class="stat-label">当前负债</view>
+      </view>
+      <view class="stat-card success">
+        <view class="stat-value">¥{{formatMoney(totalPaid)}}</view>
+        <view class="stat-label">已还金额</view>
+      </view>
+    </view>
+    <view class="progress-section">
+      <view class="progress-header">
+        <text>还款进度</text>
+        <text class="progress-percent">{{progressPercent}}%</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{progressPercent}}%"></view>
+      </view>
+      <view class="progress-info">总负债 ¥{{formatMoney(totalOriginal)}}</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">还款预测</view>
+    <view class="stats-row">
+      <view class="stat-card">
+        <view class="stat-value">{{clearMonths}}</view>
+        <view class="stat-label">预计还清月数</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-value">{{clearDate}}</view>
+        <view class="stat-label">预计还清日期</view>
+      </view>
+    </view>
+    <view class="stats-row">
+      <view class="stat-card">
+        <view class="stat-value">¥{{formatMoney(monthlyPayment)}}</view>
+        <view class="stat-label">月还款额</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-value">{{avgInterestRate}}%</view>
+        <view class="stat-label">平均利率</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{topDebtChannel}}">
+    <view class="section-title">负债大户</view>
+    <view class="channel-card">
+      <view class="channel-header">
+        <text class="channel-name">{{topDebtChannel.name}}</text>
+        <text class="channel-type">{{getTypeName(topDebtChannel.type)}}</text>
+      </view>
+      <view class="channel-stats">
+        <view class="channel-stat">
+          <text class="label">剩余</text>
+          <text class="value danger">¥{{formatMoney(topDebtChannel.remaining)}}</text>
+        </view>
+        <view class="channel-stat">
+          <text class="label">总欠款</text>
+          <text class="value">¥{{formatMoney(topDebtChannel.totalAmount)}}</text>
+        </view>
+        <view class="channel-stat">
+          <text class="label">利率</text>
+          <text class="value">{{topDebtChannel.interestRate}}%</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{typeDistribution.length > 0}}">
+    <view class="section-title">负债分布</view>
+    <view class="distribution-list">
+      <view class="distribution-item" wx:for="{{typeDistribution}}" wx:key="name">
+        <view class="dist-left">
+          <text class="dist-name">{{item.name}}</text>
+          <text class="dist-amount">¥{{formatMoney(item.amount)}}</text>
+        </view>
+        <view class="dist-right">
+          <view class="dist-bar-bg">
+            <view class="dist-bar-fill" style="width: {{item.percent}}%"></view>
+          </view>
+          <text class="dist-percent">{{item.percent}}%</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{warningChannels.length > 0}}">
+    <view class="section-title warning-title">⚠️ 到期提醒</view>
+    <view class="warning-list">
+      <view class="warning-item" wx:for="{{warningChannels}}" wx:key="name">
+        <text class="warning-name">{{item.name}}</text>
+        <text class="warning-info">
+          <text wx:if="{{item.daysUntil < 0}}" class="overdue">已逾期{{-item.daysUntil}}天</text>
+          <text wx:elif="{{item.daysUntil === 0}}" class="urgent">今天到期</text>
+          <text wx:elif="{{item.daysUntil === 1}}" class="urgent">明天到期</text>
+          <text wx:else class="warning">还有{{item.daysUntil}}天</text>
+        </text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{recentRecords.length > 0}}">
+    <view class="section-title">最近还款</view>
+    <view class="record-list">
+      <view class="record-item" wx:for="{{recentRecords}}" wx:key="index">
+        <view class="record-left">
+          <text class="record-name">{{item.name}}</text>
+          <text class="record-note" wx:if="{{item.note}}">{{item.note}}</text>
+        </view>
+        <view class="record-right">
+          <text class="record-amount">-¥{{formatMoney(item.amount)}}</text>
+          <text class="record-time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
