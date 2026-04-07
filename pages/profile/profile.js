@@ -37,6 +37,10 @@ Page({
     return (n || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   },
 
+  goAnalytics: function() {
+    wx.navigateTo({ url: '/pages/analytics/analytics' })
+  },
+
   goSuggestion: function() {
     wx.navigateTo({ url: '/pages/suggestion/suggestion' })
   },
