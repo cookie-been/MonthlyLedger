@@ -25,7 +25,7 @@
 │   ├── settings/                # 设置页 - 还款提醒、数据管理
 │   ├── suggestion/             # 反馈页 - 还款建议
 │   └── splash/                  # 启动页 - 1秒启动动画
-└── images/                       # TabBar图标、打赏收款码
+└── images/                       # TabBar图标
 ```
 
 ## WHERE TO LOOK
@@ -39,7 +39,6 @@
 | 导出/导入 | `pages/profile/profile.js`, `pages/settings/settings.js` | JSON文件操作 |
 | 成就系统 | `pages/detail/detail.js` | checkAchievements() |
 | 用户信息 | `app.js` | userInfo: nickName, avatarUrl |
-| 打赏收款码 | `images/skm.jpg` | 弹窗展示 |
 
 ## DATA MODEL
 ```javascript
