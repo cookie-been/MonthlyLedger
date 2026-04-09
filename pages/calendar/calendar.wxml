@@ -15,14 +15,33 @@
     </view>
     <view class="calendar-days">
       <view class="calendar-day empty" wx:for="{{emptyDays}}" wx:key="*this"></view>
-      <view class="calendar-day {{item.isToday?'today':''}} {{item.hasRepay?'has-repayment':''}}" wx:for="{{days}}" wx:key="day" bindtap="onDayTap" data-day="{{item.day}}">
+      <view class="calendar-day {{item.isToday?'today':''}} {{item.isRepayDay?'has-repayment':''}}" wx:for="{{days}}" wx:key="day" bindtap="onDayTap" data-day="{{item.day}}">
         <text>{{item.day}}</text>
+        <view class="repay-dots" wx:if="{{item.channels && item.channels.length > 0}}">
+          <view class="repay-dot {{ch.remaining > 0 ? 'pending' : 'done'}}" wx:for="{{item.channels}}" wx:for-item="ch" wx:key="id"></view>
+        </view>
       </view>
     </view>
   </view>
   <view class="calendar-legend">
     <view class="calendar-legend-item"><view class="calendar-legend-dot" style="background:#FF6B6B"></view>待还款</view>
-    <view class="calendar-legend-item"><view class="calendar-legend-dot" style="background:#4ECDC4"></view>已还款</view>
+    <view class="calendar-legend-item"><view class="calendar-legend-dot" style="background:#4ECDC4"></view>已还清</view>
     <view class="calendar-legend-item"><view class="calendar-legend-dot" style="background:#FF6B6B"></view>今天</view>
+  </view>
+  <view class="repay-list" wx:if="{{repayList.length > 0}}">
+    <view class="repay-list-title">本月待还款</view>
+    <view class="repay-item" wx:for="{{repayList}}" wx:key="day" bindtap="goToRepay" data-id="{{item.channels[0].id}}">
+      <view class="repay-date">{{item.month}}月{{item.day}}日</view>
+      <view class="repay-channels">
+        <view class="repay-channel" wx:for="{{item.channels}}" wx:for-item="ch" wx:key="id">
+          <text class="repay-channel-name {{ch.remaining > 0 ? '' : 'done'}}">{{ch.name}}</text>
+          <text class="repay-channel-amount {{ch.remaining > 0 ? '' : 'done'}}">¥{{ch.remaining > 0 ? ch.remaining : ch.monthlyPayment}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="repay-total">
+      <text>本月待还总计：</text>
+      <text class="total-amount">¥{{monthTotal}}</text>
+    </view>
   </view>
 </view>

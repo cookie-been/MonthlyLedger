@@ -49,14 +49,18 @@
 
   <view class="timeline-section" wx:if="{{channel.totalPeriods > 0}}">
     <view class="timeline-title">分期进度</view>
-    <view class="timeline-item {{i <= channel.paidPeriods ? 'completed' : (i === channel.paidPeriods + 1 ? 'current' : '')}}" wx:for="{{channel.totalPeriods}}" wx:key="*this" wx:for-item="i">
-      <view class="timeline-dot">{{i <= channel.paidPeriods ? '✓' : ''}}</view>
-      <view class="timeline-line" wx:if="{{i < channel.totalPeriods}}"></view>
-      <view class="timeline-content">
-        <view class="timeline-period">第{{i}}期 {{i <= channel.paidPeriods ? '已还' : (i === channel.paidPeriods + 1 ? '进行中' : '待还')}}</view>
-        <view class="timeline-amount">¥ {{monthlyPaymentDisplay}}</view>
+    <scroll-view class="timeline-scroll" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+      <view class="timeline-container">
+        <view class="timeline-item {{item <= channel.paidPeriods ? 'completed' : (item === channel.paidPeriods + 1 ? 'current' : '')}}" wx:for="{{periodList}}" wx:key="*this" wx:for-index="idx">
+          <view class="timeline-dot">{{item <= channel.paidPeriods ? '✓' : ''}}</view>
+          <view class="timeline-line" wx:if="{{idx < channel.totalPeriods - 1}}"></view>
+          <view class="timeline-content">
+            <view class="timeline-period">第{{item}}期 {{item <= channel.paidPeriods ? '已还' : (item === channel.paidPeriods + 1 ? '进行中' : '待还')}}</view>
+            <view class="timeline-amount">¥ {{monthlyPaymentDisplay}}</view>
+          </view>
+        </view>
       </view>
-    </view>
+    </scroll-view>
   </view>
 
   <view class="detail-actions">

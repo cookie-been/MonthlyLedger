@@ -5,25 +5,190 @@
 }
 .suggestion-title { font-size: 48rpx; font-weight: 700; margin-bottom: 16rpx; }
 .suggestion-desc { font-size: 28rpx; opacity: 0.9; }
-.strategy-card {
-  background: #FFFFFF; margin: 0 40rpx 32rpx; border-radius: 32rpx; padding: 40rpx;
-  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08); border: 4rpx solid transparent;
+
+.strategy-tabs {
+  display: flex;
+  margin: -40rpx 40rpx 32rpx;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  overflow: hidden;
 }
-.strategy-card.active { border-color: #FF6B6B; background: #FFF8F8; }
-.strategy-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24rpx; }
-.strategy-name { font-size: 36rpx; font-weight: 700; }
-.strategy-tag { font-size: 24rpx; color: #FF6B6B; background: #FFF0F0; padding: 8rpx 20rpx; border-radius: 40rpx; font-weight: 500; }
-.strategy-desc { font-size: 26rpx; color: #718096; margin-bottom: 32rpx; }
-.strategy-plan { margin-bottom: 32rpx; }
-.plan-item { display: flex; align-items: center; padding: 24rpx 0; border-bottom: 2rpx solid #E2E8F0; }
-.plan-item:last-child { border-bottom: none; }
-.plan-index {
-  width: 56rpx; height: 56rpx; background: #FF6B6B; color: #FFFFFF; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; font-size: 28rpx; font-weight: 600; margin-right: 24rpx;
+
+.strategy-tab {
+  flex: 1;
+  padding: 32rpx;
+  text-align: center;
+  border-bottom: 6rpx solid transparent;
 }
-.plan-name { flex: 1; font-size: 30rpx; font-weight: 500; }
-.plan-amount { font-size: 30rpx; color: #FF6B6B; font-weight: 600; margin-right: 24rpx; }
-.plan-reason { font-size: 24rpx; color: #A0AEC0; }
-.strategy-result { padding-top: 32rpx; border-top: 2rpx dashed #E2E8F0; font-size: 28rpx; color: #4ECDC4; font-weight: 600; }
-.summary-section { display: flex; justify-content: space-between; background: #FFFFFF; margin: 0 40rpx 40rpx; border-radius: 32rpx; padding: 40rpx; box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08); }
-.summary-item { text-align: center; flex: 1; }
+
+.strategy-tab.active {
+  border-bottom-color: #FF6B6B;
+  background: #FFF8F8;
+}
+
+.tab-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 8rpx;
+}
+
+.tab-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #A0AEC0;
+}
+
+.strategy-tab.active .tab-name {
+  color: #FF6B6B;
+}
+
+.strategy-info {
+  display: flex;
+  align-items: flex-start;
+  background: #FFFFFF;
+  margin: 0 40rpx 32rpx;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+}
+
+.info-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.info-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #718096;
+  line-height: 1.6;
+}
+
+.plan-section {
+  background: #FFFFFF;
+  margin: 0 40rpx 32rpx;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+}
+
+.plan-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 24rpx;
+}
+
+.plan-empty {
+  text-align: center;
+  padding: 60rpx;
+  color: #A0AEC0;
+  font-size: 28rpx;
+}
+
+.plan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.plan-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  background: #F8FAFC;
+  border-radius: 16rpx;
+}
+
+.plan-num {
+  width: 56rpx;
+  height: 56rpx;
+  background: #FF6B6B;
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-right: 24rpx;
+}
+
+.plan-detail {
+  flex: 1;
+}
+
+.plan-name {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #2C3E50;
+  margin-bottom: 8rpx;
+}
+
+.plan-reason {
+  font-size: 24rpx;
+  color: #A0AEC0;
+}
+
+.plan-amount {
+  text-align: right;
+}
+
+.amount-value {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #FF6B6B;
+}
+
+.amount-label {
+  font-size: 24rpx;
+  color: #A0AEC0;
+}
+
+.summary-section {
+  margin: 0 40rpx;
+}
+
+.summary-card {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+}
+
+.summary-item {
+  flex: 1;
+  text-align: center;
+}
+
+.summary-label {
+  display: block;
+  font-size: 24rpx;
+  color: #718096;
+  margin-bottom: 12rpx;
+}
+
+.summary-value {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2C3E50;
+}
+
+.summary-value.primary {
+  color: #FF6B6B;
+}
+
+.summary-value.success {
+  color: #4ECDC4;
+}
+
+.summary-divider {
+  width: 2rpx;
+  background: #E2E8F0;
+  margin: 0 16rpx;
+}

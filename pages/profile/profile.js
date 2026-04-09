@@ -9,10 +9,21 @@ Page({
     totalRepaid: 0,
     totalRepaidDisplay: '0.00',
     useDays: 0,
-    userInfo: {}
+    userInfo: {},
+    monthlyPayment: 0,
+    monthlyPaymentDisplay: '0.00',
+    clearDate: '-'
+  },
+
+  onLoad: function() {
+    this.loadData()
   },
 
   onShow: function() {
+    this.loadData()
+  },
+
+  loadData: function() {
     var that = this
     this.setData({ userInfo: app.globalData.userInfo })
     
@@ -20,10 +31,12 @@ Page({
     var totalDebt = 0
     var totalOrig = 0
     var clearedCount = 0
+    var monthlyPayment = 0
 
     for (var i = 0; i < channels.length; i++) {
       totalDebt += channels[i].remaining
       totalOrig += channels[i].totalAmount
+      monthlyPayment += channels[i].monthlyPayment || 0
       if (channels[i].remaining === 0) {
         clearedCount++
       }
@@ -34,6 +47,15 @@ Page({
     var createdDate = util.parseDate(createdAt)
     var now = new Date()
     var useDays = Math.floor((now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24)) + 1
+    
+    // 计算预计清零时间
+    var clearDate = '-'
+    if (monthlyPayment > 0 && totalDebt > 0) {
+      var months = Math.ceil(totalDebt / monthlyPayment)
+      var d = new Date()
+      d.setMonth(d.getMonth() + months)
+      clearDate = d.getFullYear() + '-' + (d.getMonth() + 1 < 10 ? '0' : '') + (d.getMonth() + 1)
+    }
 
     this.setData({ 
       totalDebt: totalDebt, 
@@ -41,7 +63,10 @@ Page({
       totalRepaid: totalRepaid,
       totalRepaidDisplay: this.formatMoney(totalRepaid), 
       clearedCount: clearedCount, 
-      useDays: useDays 
+      useDays: useDays,
+      monthlyPayment: monthlyPayment,
+      monthlyPaymentDisplay: this.formatMoney(monthlyPayment),
+      clearDate: clearDate
     })
   },
 
@@ -132,9 +157,13 @@ Page({
   showAbout: function() {
     wx.showModal({
       title: '关于我们',
-      content: '月月账单 v1.0.0\n致力于帮助用户轻松管理债务，早日实现财务自由。',
+      content: '一款简洁高效的账单管理工具，帮助你清晰规划还款，早日摆脱债务困扰。',
       showCancel: false
     })
+  },
+
+  showGuide: function() {
+    wx.navigateTo({ url: '/pages/guide/guide' })
   },
 
   exportData: function() {

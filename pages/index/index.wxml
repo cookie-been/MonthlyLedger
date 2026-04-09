@@ -45,45 +45,13 @@
 
   <!-- 数据可视化区域 -->
   <view class="visual-section" wx:if="{{channels.length > 0}}">
-    <view class="visual-header">
-      <view class="visual-title">数据分析</view>
-      <view class="visual-tabs">
-        <view class="visual-tab {{visualTab==='trend'?'active':''}}" bindtap="switchVisualTab" data-type="trend">趋势</view>
-        <view class="visual-tab {{visualTab==='pie'?'active':''}}" bindtap="switchVisualTab" data-type="pie">占比</view>
-      </view>
-    </view>
-    
-    <!-- 趋势图 -->
-    <view class="chart-container" wx:if="{{visualTab==='trend'}}">
-      <view class="trend-chart">
-        <view class="chart-y-axis">
-          <text>{{trendMax}}</text>
-          <text>{{trendMid}}</text>
-          <text>0</text>
-        </view>
-        <view class="trend-bars">
-          <view class="trend-bar-item" wx:for="{{trendData}}" wx:key="month">
-            <view class="bar-wrapper">
-              <view class="trend-bar" style="height: {{item.percent}}%"></view>
-            </view>
-            <text class="bar-label">{{item.month}}</text>
-          </view>
-        </view>
-      </view>
-    </view>
-    
-    <!-- 饼图 -->
-    <view class="chart-container" wx:if="{{visualTab==='pie'}}">
-      <view class="pie-chart">
-        <view class="pie-circle">
-          <view class="pie-center">
-            <text class="pie-total">{{totalDebtDisplay}}</text>
-            <text class="pie-label">总负债</text>
-          </view>
-        </view>
+    <view class="chart-card">
+      <view class="card-title">渠道剩余占比</view>
+      <view class="pie-wrapper">
+        <canvas canvas-id="pieCanvas" class="pie-canvas"></canvas>
       </view>
       <view class="pie-legend">
-        <view class="legend-item" wx:for="{{pieData}}" wx:key="type">
+        <view class="legend-item" wx:for="{{pieData}}" wx:key="index">
           <view class="legend-dot" style="background:{{item.color}}"></view>
           <text class="legend-name">{{item.name}}</text>
           <text class="legend-value">{{item.percentage}}</text>

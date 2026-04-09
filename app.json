@@ -10,7 +10,8 @@
     "pages/suggestion/suggestion",
     "pages/achievement/achievement",
     "pages/settings/settings",
-    "pages/splash/splash"
+    "pages/splash/splash",
+    "pages/guide/guide"
   ],
   "lazyCodeLoading": "requiredComponents",
   "window": {

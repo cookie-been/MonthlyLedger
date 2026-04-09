@@ -3,52 +3,62 @@
     <view class="suggestion-title">还款建议</view>
     <view class="suggestion-desc">智能推荐最优还款策略</view>
   </view>
-  <view class="strategy-card {{selectedStrategy==='snowball'?'active':''}}" bindtap="selectStrategy" data-strategy="snowball">
-    <view class="strategy-header">
-      <view class="strategy-name">雪球法</view>
-      <view class="strategy-tag">快速获得成就感</view>
+
+  <view class="strategy-tabs">
+    <view class="strategy-tab {{selectedStrategy==='snowball'?'active':''}}" bindtap="selectStrategy" data-strategy="snowball">
+      <text class="tab-name">雪球法</text>
+      <text class="tab-desc">还最小债务</text>
     </view>
-    <view class="strategy-desc">优先还清最小额度的债务，快速看到第一个还清的结果</view>
-    <view class="strategy-plan">
-      <view style="font-size:28rpx;font-weight:600;margin-bottom:24rpx;">还款顺序：</view>
-      <view class="plan-item" wx:for="{{snowballChannels}}" wx:key="id" wx:for-index="idx">
-        <view class="plan-index">{{idx + 1}}</view>
-        <view class="plan-name">{{item.name}}</view>
-        <view class="plan-amount">¥{{formatMoney(item.monthlyPayment)}}</view>
-        <view class="plan-reason">剩余最少</view>
+    <view class="strategy-tab {{selectedStrategy==='avalanche'?'active':''}}" bindtap="selectStrategy" data-strategy="avalanche">
+      <text class="tab-name">雪崩法</text>
+      <text class="tab-desc">节省利息</text>
+    </view>
+  </view>
+
+  <view class="strategy-info" wx:if="{{selectedStrategy === 'snowball'}}">
+    <view class="info-icon">🎯</view>
+    <view class="info-text">优先还清最小额度的债务，快速看到第一个还清的结果，获得成就感</view>
+  </view>
+  <view class="strategy-info" wx:if="{{selectedStrategy === 'avalanche'}}">
+    <view class="info-icon">💰</view>
+    <view class="info-text">优先还清利率最高的债务，长期来看可以节省更多利息支出</view>
+  </view>
+
+  <view class="plan-section">
+    <view class="plan-title">还款计划</view>
+    <view class="plan-empty" wx:if="{{currentChannels.length === 0}}">暂无待还账单</view>
+    <view class="plan-list">
+      <view class="plan-item" wx:for="{{currentChannels}}" wx:key="id" wx:for-index="idx">
+        <view class="plan-num">{{idx + 1}}</view>
+        <view class="plan-detail">
+          <view class="plan-name">{{item.name}}</view>
+          <view class="plan-reason" wx:if="{{selectedStrategy === 'snowball'}}">剩余 {{item.remainingDisplay}} 最少</view>
+          <view class="plan-reason" wx:if="{{selectedStrategy === 'avalanche'}}">利率 {{item.interestRate || 0}}% 最高</view>
+        </view>
+        <view class="plan-amount">
+          <text class="amount-value">¥{{item.monthlyDisplay}}</text>
+          <text class="amount-label">/月</text>
+        </view>
       </view>
     </view>
-    <view class="strategy-result">预计清零：{{estimatedMonths}}个月</view>
   </view>
-  <view class="strategy-card {{selectedStrategy==='avalanche'?'active':''}}" bindtap="selectStrategy" data-strategy="avalanche">
-    <view class="strategy-header">
-      <view class="strategy-name">雪崩法</view>
-      <view class="strategy-tag" style="color:#4ECDC4;background:#E8F8F5;">节省总利息</view>
-    </view>
-    <view class="strategy-desc">优先还清利率最高的债务，长期来看节省更多利息</view>
-    <view class="strategy-plan">
-      <view style="font-size:28rpx;font-weight:600;margin-bottom:24rpx;">还款顺序：</view>
-      <view class="plan-item" wx:for="{{avalancheChannels}}" wx:key="id" wx:for-index="idx">
-        <view class="plan-index">{{idx + 1}}</view>
-        <view class="plan-name">{{item.name}}</view>
-        <view class="plan-amount">¥{{formatMoney(item.monthlyPayment)}}</view>
-        <view class="plan-reason">利率 {{item.interestRate}}%</view>
-      </view>
-    </view>
-    <view class="strategy-result">预计清零：{{estimatedMonths}}个月</view>
-  </view>
+
   <view class="summary-section">
-    <view class="summary-item">
-      <view style="font-size:26rpx;color:#718096;margin-bottom:12rpx;">总账单</view>
-      <view style="font-size:36rpx;font-weight:700;">¥{{formatMoney(totalDebt)}}</view>
-    </view>
-    <view class="summary-item">
-      <view style="font-size:26rpx;color:#718096;margin-bottom:12rpx;">月还款</view>
-      <view style="font-size:36rpx;font-weight:700;">¥{{formatMoney(monthlyPayment)}}</view>
-    </view>
-    <view class="summary-item">
-      <view style="font-size:26rpx;color:#718096;margin-bottom:12rpx;">预计清零</view>
-      <view style="font-size:36rpx;font-weight:700;">{{clearDate}}</view>
+    <view class="summary-card">
+      <view class="summary-item">
+        <text class="summary-label">总账单</text>
+        <text class="summary-value primary">¥{{totalDebtDisplay}}</text>
+      </view>
+      <view class="summary-divider"></view>
+      <view class="summary-item">
+        <text class="summary-label">月还款</text>
+        <text class="summary-value">¥{{monthlyPaymentDisplay}}</text>
+      </view>
+      <view class="summary-divider"></view>
+      <view class="summary-item">
+        <text class="summary-label">预计清零</text>
+        <text class="summary-value success">{{clearDate}}</text>
+      </view>
     </view>
   </view>
 </view>

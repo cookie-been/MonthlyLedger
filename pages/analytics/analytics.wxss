@@ -314,3 +314,24 @@
   font-size: 24rpx;
   color: #A0AEC0;
 }
+
+.status-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24rpx;
+  padding: 20rpx;
+  background: #F8FAFC;
+  border-radius: 16rpx;
+}
+
+.status-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.status-text {
+  font-size: 28rpx;
+  color: #4A5568;
+  font-weight: 500;
+}

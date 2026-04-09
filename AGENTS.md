@@ -81,6 +81,12 @@
 - ❌ async/await
 - ❌ 状态管理 (直接 setData)
 - ❌ TypeScript
+- ❌ SWC编译 (project.config.json已禁用)
+
+## BUILD CONFIG NOTES
+- ⚠️ project.config.json 设置 es6=true 但代码约定ES5
+- ⚠️ Babel已配置但无自定义插件
+- ⚠️ SWC明确禁用 (disableSWC: true)
 
 ## COMMANDS
 ```bash

@@ -46,6 +46,9 @@
     <view class="menu-item" bindtap="goSettings">
       <view class="menu-icon">⚙️</view><view class="menu-text">设置</view><view class="menu-arrow">›</view>
     </view>
+    <view class="menu-item" bindtap="showGuide">
+      <view class="menu-icon">📖</view><view class="menu-text">使用手册</view><view class="menu-arrow">›</view>
+    </view>
     <view class="menu-item" bindtap="showAbout">
       <view class="menu-icon">ℹ️</view><view class="menu-text">关于我们</view><view class="menu-arrow">›</view>
     </view>

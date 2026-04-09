@@ -24,6 +24,12 @@ Page({
     var startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
     var startOfYear = new Date(now.getFullYear(), 0, 1)
 
+    // 建立channel id到name的映射
+    var channelMap = {}
+    for (var c = 0; c < channels.length; c++) {
+      channelMap[channels[c].id] = channels[c].name
+    }
+
     var totalRepaid = 0
     var monthRepaid = 0
     var clearedCount = 0
@@ -34,6 +40,8 @@ Page({
       if (recordDate.getTime() >= startOfMonth.getTime()) {
         monthRepaid += records[i].amount
       }
+      // 添加渠道名称
+      records[i].channelName = channelMap[records[i].channelId] || '未知'
     }
 
     for (var j = 0; j < channels.length; j++) {
@@ -112,5 +120,22 @@ Page({
 
   goDetail: function(e) {
     wx.navigateTo({ url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id })
+  },
+
+  deleteRecord: function(e) {
+    var that = this
+    var recordId = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这条还款记录吗？',
+      success: function(res) {
+        if (res.confirm) {
+          app.globalData.records = app.globalData.records.filter(function(r) { return r.id !== recordId })
+          app.saveData()
+          that.applyFilter()
+          wx.showToast({ title: '删除成功', icon: 'success' })
+        }
+      }
+    })
   }
 })

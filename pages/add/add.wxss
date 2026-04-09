@@ -51,6 +51,40 @@
   font-size: 32rpx;
 }
 
+.installment-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.installment-input {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  background: #F8FAFC;
+  border-radius: 24rpx;
+  padding: 0 24rpx;
+  border: 1rpx solid #E2E8F0;
+  flex: 1;
+}
+
+.installment-input .form-input {
+  background: transparent;
+  border: none;
+  width: 100%;
+}
+
+.installment-label {
+  font-size: 28rpx;
+  color: #718096;
+  margin-left: 8rpx;
+}
+
+.installment-divider {
+  font-size: 32rpx;
+  color: #A0AEC0;
+}
+
 .picker-value {
   height: 88rpx;
   background: #F8FAFC;

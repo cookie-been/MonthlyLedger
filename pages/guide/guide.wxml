@@ -1,0 +1,49 @@
+<view class="guide-page">
+  <view class="guide-content">
+    <view class="guide-section">
+      <view class="section-title">📱 首页</view>
+      <view class="section-content">
+        <view class="item">• 总账单、月还款、清零倒计时</view>
+        <view class="item">• 点击卡片进入详情</view>
+        <view class="item">• 长按卡片删除账单</view>
+        <view class="item">• 点击"+"添加新账单</view>
+      </view>
+    </view>
+
+    <view class="guide-section">
+      <view class="section-title">📅 日历</view>
+      <view class="section-content">
+        <view class="item">• 每月还款日安排</view>
+        <view class="item">• 点击日期查看待还账单</view>
+      </view>
+    </view>
+
+    <view class="guide-section">
+      <view class="section-title">📋 记录</view>
+      <view class="section-content">
+        <view class="item">• 查看历史还款明细</view>
+        <view class="item">• 长按单条记录删除</view>
+      </view>
+    </view>
+
+    <view class="guide-section">
+      <view class="section-title">👤 我的</view>
+      <view class="section-content">
+        <view class="item">• 数据分析：详细统计</view>
+        <view class="item">• 还款建议：雪球法/雪崩法</view>
+        <view class="item">• 导出/导入：备份数据</view>
+        <view class="item">• 设置：还款提醒等</view>
+      </view>
+    </view>
+
+    <view class="guide-section">
+      <view class="section-title">⚡ 快捷操作</view>
+      <view class="section-content">
+        <view class="item">• 添加账单 → 首页"+"按钮</view>
+        <view class="item">• 记录还款 → 详情页"立即还款"</view>
+        <view class="item">• 删除账单 → 首页长按卡片</view>
+        <view class="item">• 删除记录 → 记录页长按</view>
+      </view>
+    </view>
+  </view>
+</view>

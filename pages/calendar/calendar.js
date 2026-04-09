@@ -7,7 +7,8 @@ Page({
     calendarTitle: '',
     emptyDays: [],
     days: [],
-    repaymentDays: []
+    repaymentDays: [],
+    repayList: []
   },
 
   onShow: function() {
@@ -25,12 +26,15 @@ Page({
     var daysInMonth = new Date(year, month + 1, 0).getDate()
     var today = new Date()
     
-    var channels = app.globalData.channels
-    var repaymentDays = []
+    var channels = app.globalData.channels || []
+    
+    // 按还款日分组
+    var dayChannels = {}
     for (var i = 0; i < channels.length; i++) {
-      if (channels[i].remaining > 0) {
-        repaymentDays.push(channels[i].repaymentDay)
-      }
+      var ch = channels[i]
+      var day = ch.repaymentDay
+      if (!dayChannels[day]) dayChannels[day] = []
+      dayChannels[day].push(ch)
     }
 
     var emptyDays = []
@@ -39,19 +43,46 @@ Page({
     }
     
     var days = []
+    var repayList = []
+    var monthTotal = 0
     for (var d = 1; d <= daysInMonth; d++) {
       var isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear()
-      var hasRepay = false
-      for (var j = 0; j < repaymentDays.length; j++) {
-        if (repaymentDays[j] === d) {
-          hasRepay = true
-          break
+      var isRepayDay = dayChannels[d] && dayChannels[d].length > 0
+      var dayChannelsList = dayChannels[d] || []
+      
+      days.push({ 
+        day: d, 
+        isToday: isToday, 
+        isRepayDay: isRepayDay,
+        channels: dayChannelsList
+      })
+      
+      // 本月待还款列表
+      if (isRepayDay) {
+        var pendingList = dayChannelsList.filter(function(c) { return c.remaining > 0 })
+        var totalAmount = 0
+        for (var k = 0; k < pendingList.length; k++) {
+          totalAmount += pendingList[k].monthlyPayment || 0
+        }
+        if (pendingList.length > 0) {
+          monthTotal += totalAmount
+          repayList.push({
+            day: d,
+            month: month + 1,
+            channels: dayChannelsList,
+            totalAmount: totalAmount
+          })
         }
       }
-      days.push({ day: d, isToday: isToday, hasRepay: hasRepay })
     }
 
-    this.setData({ calendarTitle: title, emptyDays: emptyDays, days: days })
+    this.setData({ 
+      calendarTitle: title, 
+      emptyDays: emptyDays, 
+      days: days,
+      repayList: repayList.sort(function(a, b) { return a.day - b.day }),
+      monthTotal: monthTotal.toFixed(2)
+    })
   },
 
   prevMonth: function() {
@@ -72,18 +103,31 @@ Page({
 
   onDayTap: function(e) {
     var day = e.currentTarget.dataset.day
-    var channels = app.globalData.channels
-    var names = []
+    var channels = app.globalData.channels || []
+    var dayChannels = []
     for (var i = 0; i < channels.length; i++) {
-      if (channels[i].repaymentDay === day && channels[i].remaining > 0) {
-        names.push(channels[i].name)
+      if (channels[i].repaymentDay === day) {
+        dayChannels.push(channels[i])
       }
     }
-    if (names.length === 0) return
+    if (dayChannels.length === 0) return
+    
+    var content = ''
+    for (var j = 0; j < dayChannels.length; j++) {
+      var ch = dayChannels[j]
+      content += ch.name + ' - ' + (ch.remaining > 0 ? '待还 ¥' + ch.remaining : '已还清') + '\n'
+    }
     wx.showModal({
-      title: (this.data.month + 1) + '月' + day + '日 还款任务',
-      content: names.join('、'),
+      title: (this.data.month + 1) + '月' + day + '日 还款',
+      content: content,
       showCancel: false
     })
+  },
+
+  goToRepay: function(e) {
+    var id = e.currentTarget.dataset.id
+    if (id) {
+      wx.navigateTo({ url: '/pages/detail/detail?id=' + id })
+    }
   }
 })

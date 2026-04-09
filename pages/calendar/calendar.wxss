@@ -33,3 +33,24 @@
 .calendar-legend { display: flex; justify-content: center; gap: 48rpx; margin: 0 40rpx 40rpx; padding: 32rpx; background: #FFFFFF; border-radius: 24rpx; }
 .calendar-legend-item { display: flex; align-items: center; gap: 12rpx; font-size: 26rpx; color: #718096; }
 .calendar-legend-dot { width: 20rpx; height: 20rpx; border-radius: 50%; }
+
+/* 还款日期小点 */
+.repay-dots { display: flex; gap: 4rpx; margin-top: 4rpx; }
+.repay-dot { width: 8rpx; height: 8rpx; border-radius: 50%; }
+.repay-dot.pending { background: #FF6B6B; }
+.repay-dot.done { background: #4ECDC4; }
+
+/* 待还款列表 */
+.repay-list { margin: 0 32rpx 32rpx; background: #FFFFFF; border-radius: 24rpx; padding: 32rpx; }
+.repay-list-title { font-size: 32rpx; font-weight: 600; margin-bottom: 24rpx; }
+.repay-item { display: flex; align-items: flex-start; padding: 20rpx 0; border-bottom: 1rpx solid #F0F0F0; }
+.repay-item:last-child { border-bottom: none; }
+.repay-date { font-size: 28rpx; font-weight: 500; color: #FF6B6B; width: 140rpx; padding-top: 8rpx; }
+.repay-channels { flex: 1; display: flex; flex-direction: column; gap: 12rpx; }
+.repay-channel { display: flex; justify-content: space-between; align-items: center; }
+.repay-channel-name { font-size: 26rpx; color: #2C3E50; }
+.repay-channel-name.done { color: #4ECDC4; }
+.repay-channel-amount { font-size: 26rpx; color: #FF6B6B; font-weight: 500; }
+.repay-channel-amount.done { color: #4ECDC4; text-decoration: line-through; }
+.repay-total { display: flex; justify-content: flex-end; align-items: center; margin-top: 24rpx; padding-top: 24rpx; border-top: 2rpx solid #F0F0F0; font-size: 28rpx; color: #718096; }
+.total-amount { font-size: 36rpx; font-weight: 700; color: #FF6B6B; margin-left: 16rpx; }

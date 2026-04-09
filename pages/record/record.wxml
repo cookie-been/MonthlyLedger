@@ -26,13 +26,16 @@
     <view class="empty-icon">📋</view>
     <view class="empty-text">暂无还款记录</view>
   </view>
-  <view class="record-item" wx:for="{{filteredRecords}}" wx:key="id" bindtap="goDetail" data-id="{{item.channelId}}">
-    <view class="record-icon">✓</view>
-    <view class="record-info">
-      <view class="record-channel">{{item.name}}</view>
-      <view class="record-time">{{item.time}}</view>
-      <view class="record-note" wx:if="{{item.note}}">{{item.note}}</view>
+  <view class="record-list">
+    <view class="record-item" wx:for="{{filteredRecords}}" wx:key="id" bindtap="goDetail" data-id="{{item.channelId}}">
+      <view class="record-icon">✓</view>
+      <view class="record-info">
+        <view class="record-channel">{{item.channelName || item.name}}</view>
+        <view class="record-time">{{item.time}}</view>
+        <view class="record-note" wx:if="{{item.note}}">{{item.note}}</view>
+      </view>
+      <view class="record-amount">-¥{{item.amountDisplay}}</view>
+      <view class="record-delete" catchtap="deleteRecord" data-id="{{item.id}}">删除</view>
     </view>
-    <view class="record-amount">-¥{{item.amountDisplay}}</view>
   </view>
 </view>

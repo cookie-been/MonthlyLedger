@@ -8,9 +8,10 @@
       <text class="form-label">渠道类型 <text style="color:#FF6B6B;">*</text></text>
       <view class="type-options">
         <view class="type-option {{form.type==='credit_card'?'active':''}}" bindtap="selectType" data-type="credit_card">💳 信用卡</view>
-        <view class="type-option {{form.type==='huabei'?'active':''}}" bindtap="selectType" data-type="huabei">🏦 银行</view>
-        <view class="type-option {{form.type==='net_loan'?'active':''}}" bindtap="selectType" data-type="net_loan">🌐 网贷</view>
-        <view class="type-option {{form.type==='other'?'active':''}}" bindtap="selectType" data-type="other">📋 其他</view>
+        <view class="type-option {{form.type==='bank_loan'?'active':''}}" bindtap="selectType" data-type="bank_loan">🏦 银行贷款</view>
+        <view class="type-option {{form.type==='company_loan'?'active':''}}" bindtap="selectType" data-type="company_loan">🏢 企业贷款</view>
+        <view class="type-option {{form.type==='personal_loan'?'active':''}}" bindtap="selectType" data-type="personal_loan">👤 个人贷款</view>
+        <view class="type-option {{form.type==='other'?'active':''}}" bindtap="selectType" data-type="other">📋 其它</view>
       </view>
     </view>
     <view class="form-group">
@@ -29,7 +30,17 @@
     </view>
     <view class="form-group">
       <text class="form-label">分期数（可选）</text>
-      <input class="form-input" type="number" value="{{form.totalPeriods}}" bindinput="onPeriodsInput" placeholder="总期数"/>
+      <view class="installment-row">
+        <view class="installment-input">
+          <input class="form-input" type="number" value="{{form.totalPeriods}}" bindinput="onPeriodsInput" placeholder="总期数"/>
+          <text class="installment-label">期</text>
+        </view>
+        <view class="installment-divider">/</view>
+        <view class="installment-input">
+          <input class="form-input" type="number" value="{{form.paidPeriods}}" bindinput="onPaidPeriodsInput" placeholder="已还"/>
+          <text class="installment-label">期</text>
+        </view>
+      </view>
     </view>
     <view class="form-group">
       <text class="form-label">还款日期 <text style="color:#FF6B6B;">*</text></text>

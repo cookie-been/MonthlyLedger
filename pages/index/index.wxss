@@ -335,9 +335,9 @@
 }
 
 .type-credit_card { background: #FFF0F0; color: #FF6B6B; }
-.type-huabei { background: #E8F8F5; color: #4ECDC4; }
-.type-jiebei { background: #FEF9E7; color: #F39C12; }
-.type-net_loan { background: #F5EEF8; color: #9B59B6; }
+.type-bank_loan { background: #E8F8F5; color: #4ECDC4; }
+.type-company_loan { background: #FEF9E7; color: #F39C12; }
+.type-personal_loan { background: #F5EEF8; color: #9B59B6; }
 .type-other { background: #EBF5FB; color: #3498DB; }
 
 .channel-name {
@@ -608,6 +608,95 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 24rpx;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 8rpx 16rpx;
+}
+
+.legend-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+}
+
+.legend-name {
+  font-size: 24rpx;
+  color: #2C3E50;
+  margin-right: 8rpx;
+}
+
+.legend-value {
+  font-size: 24rpx;
+  color: #718096;
+}
+
+.installment-status {
+  margin: 0 40rpx 40rpx;
+  padding: 24rpx 32rpx;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+}
+
+.installment-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.installment-text {
+  font-size: 28rpx;
+  color: #4A5568;
+}
+
+/* 数据可视化 - 卡片式设计 */
+.visual-section {
+  padding: 32rpx;
+  margin: 0 32rpx;
+}
+
+.chart-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  padding: 32rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+  width: 100%;
+  text-align: center;
+}
+
+.pie-wrapper {
+  width: 400rpx;
+  height: 400rpx;
+}
+
+.pie-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.pie-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24rpx;
+  width: 100%;
 }
 
 .legend-item {

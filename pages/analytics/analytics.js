@@ -15,7 +15,15 @@ Page({
     monthlyTrend: [],
     recentRecords: [],
     topDebtChannel: null,
-    warningChannels: []
+    warningChannels: [],
+    // 分期统计
+    totalPeriods: 0,
+    paidPeriods: 0,
+    remainingPeriods: 0,
+    avgMonthlyPayment: 0,
+    // 分期进度分析
+    installmentStatus: {},
+    periodProgress: 0
   },
 
   onShow: function() {
@@ -23,6 +31,7 @@ Page({
   },
 
   loadAnalytics: function() {
+    var that = this
     var channels = app.globalData.channels || []
     var records = app.globalData.records || []
 
@@ -34,13 +43,27 @@ Page({
     var monthlyPayment = 0
     var typeMap = {}
     var warningChannels = []
+    var totalPeriods = 0
+    var paidPeriods = 0
 
     for (var i = 0; i < channels.length; i++) {
       var ch = channels[i]
-      totalOriginal += ch.totalAmount
-      totalDebt += ch.remaining
-      totalPaid += (ch.totalAmount - ch.remaining)
-      monthlyPayment += ch.monthlyPayment
+      totalOriginal += ch.totalAmount || 0
+      totalDebt += ch.remaining || 0
+      
+      // 按已还期数计算已还金额
+      if (ch.paidPeriods && ch.paidPeriods > 0) {
+        totalPaid += ch.paidPeriods * (ch.monthlyPayment || 0)
+      } else {
+        totalPaid += ((ch.totalAmount || 0) - (ch.remaining || 0))
+      }
+      monthlyPayment += ch.monthlyPayment || 0
+
+      // 统计分期
+      if (ch.totalPeriods > 0) {
+        totalPeriods += ch.totalPeriods
+        paidPeriods += (ch.paidPeriods || 0)
+      }
 
       if (ch.interestRate > 0) {
         totalInterest += ch.interestRate
@@ -49,7 +72,7 @@ Page({
 
       if (ch.remaining > 0) {
         var typeName = this.getTypeName(ch.type)
-        typeMap[typeName] = (typeMap[typeName] || 0) + ch.remaining
+        typeMap[typeName] = (typeMap[typeName] || 0) + (ch.remaining || 0)
       }
 
       var daysUntil = this.getDaysUntil(ch.repaymentDay)
@@ -72,54 +95,125 @@ Page({
       clearDate = (d.getFullYear()) + '年' + (d.getMonth() + 1) + '月'
     }
 
+    // 平均月还款
+    var activeCount = 0
+    for (var ac = 0; ac < channels.length; ac++) {
+      if (channels[ac].remaining > 0) activeCount++
+    }
+    var avgMonthlyPayment = activeCount > 0 ? Math.round(monthlyPayment / activeCount) : 0
+
+    // 分期进度分析
+    var installmentStatus = this.calculateInstallmentStatus(channels, paidPeriods)
+    var periodProgress = totalPeriods > 0 ? Math.round((paidPeriods / totalPeriods) * 100) : 0
+
     var typeDistribution = []
     var typeNames = Object.keys(typeMap)
     for (var j = 0; j < typeNames.length; j++) {
       typeDistribution.push({
         name: typeNames[j],
         amount: typeMap[typeNames[j]],
+        amountDisplay: this.formatMoney(typeMap[typeNames[j]]),
         percent: totalDebt > 0 ? Math.round((typeMap[typeNames[j]] / totalDebt) * 100) : 0
       })
     }
     typeDistribution.sort(function(a, b) { return b.amount - a.amount })
 
-    var sortedChannels = channels.filter(function(c) { return c.remaining > 0 })
-      .sort(function(a, b) { return b.remaining - a.remaining })
+    var sortedChannels = []
+    for (var sc = 0; sc < channels.length; sc++) {
+      if (channels[sc].remaining > 0) sortedChannels.push(channels[sc])
+    }
+    sortedChannels.sort(function(a, b) { return b.remaining - a.remaining })
     var topDebtChannel = sortedChannels.length > 0 ? sortedChannels[0] : null
+    if (topDebtChannel) {
+      topDebtChannel.remainingDisplay = this.formatMoney(topDebtChannel.remaining || 0)
+      topDebtChannel.totalAmountDisplay = this.formatMoney(topDebtChannel.totalAmount || 0)
+    }
 
-    var recentRecords = records.slice(0, 5).map(function(r) {
-      return {
-        name: r.name,
-        amount: r.amount,
-        time: r.time,
-        note: r.note
-      }
-    })
+    var recentRecords = []
+    for (var rr = 0; rr < records.length && rr < 5; rr++) {
+      recentRecords.push({
+        name: records[rr].name,
+        amount: records[rr].amount,
+        amountDisplay: this.formatMoney(records[rr].amount || 0),
+        time: records[rr].time,
+        note: records[rr].note
+      })
+    }
 
     this.setData({
       totalDebt: totalDebt,
+      totalDebtDisplay: this.formatMoney(totalDebt),
       totalOriginal: totalOriginal,
+      totalOriginalDisplay: this.formatMoney(totalOriginal),
       totalPaid: totalPaid,
+      totalPaidDisplay: this.formatMoney(totalPaid),
       progressPercent: progressPercent,
       monthlyPayment: monthlyPayment,
+      monthlyPaymentDisplay: this.formatMoney(monthlyPayment),
       avgInterestRate: avgInterestRate,
       clearMonths: clearMonths,
       clearDate: clearDate,
       typeDistribution: typeDistribution,
       topDebtChannel: topDebtChannel,
       warningChannels: warningChannels,
-      recentRecords: recentRecords
+      recentRecords: recentRecords,
+      totalPeriods: totalPeriods,
+      paidPeriods: paidPeriods,
+      remainingPeriods: totalPeriods - paidPeriods,
+      avgMonthlyPayment: avgMonthlyPayment,
+      avgMonthlyPaymentDisplay: this.formatMoney(avgMonthlyPayment),
+      installmentStatus: installmentStatus,
+      periodProgress: periodProgress
     })
+  },
+
+  calculateInstallmentStatus: function(channels, paidPeriods) {
+    var totalPeriods = 0
+    var createdAt = app.globalData.createdAt
+    
+    // 计算从创建到现在经过的月份数
+    var monthsPassed = 1
+    if (createdAt) {
+      var created = util.parseDate(createdAt)
+      var now = new Date()
+      monthsPassed = Math.max(1, (now.getFullYear() - created.getFullYear()) * 12 + (now.getMonth() - created.getMonth()) + 1)
+    }
+    
+    // 统计有分期的渠道
+    for (var i = 0; i < channels.length; i++) {
+      if (channels[i].totalPeriods > 0) {
+        totalPeriods += channels[i].totalPeriods
+      }
+    }
+    
+    if (totalPeriods === 0) {
+      return { icon: '', text: '暂无分期', status: 'none' }
+    }
+    
+    // 理论应该还的期数（按时间推算）
+    var expectedPaid = monthsPassed
+    
+    // 比较实际还款与预期
+    if (paidPeriods >= totalPeriods) {
+      return { icon: '🎉', text: '已全部还清', status: 'completed' }
+    } else if (paidPeriods >= expectedPaid) {
+      return { icon: '🔥', text: '进度正常', status: 'normal' }
+    } else if (paidPeriods >= expectedPaid - 2) {
+      return { icon: '⚠️', text: '略微落后', status: 'behind' }
+    } else {
+      return { icon: '⏰', text: '严重落后', status: 'serious' }
+    }
   },
 
   getTypeName: function(type) {
     var typeMap = {
       'credit_card': '信用卡',
-      'huabei': '银行',
-      'net_loan': '网贷',
-      'other': '其他'
+      'bank_loan': '银行贷款',
+      'company_loan': '企业贷款',
+      'personal_loan': '个人贷款',
+      'other': '其它'
     }
-    return typeMap[type] || '其他'
+    return typeMap[type] || '其它'
   },
 
   getDaysUntil: function(repaymentDay) {

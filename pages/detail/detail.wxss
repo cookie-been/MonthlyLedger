@@ -125,8 +125,8 @@
 }
 
 .timeline-section {
+  margin: 32rpx;
   background: #FFFFFF;
-  margin: 0 40rpx 40rpx;
   border-radius: 32rpx;
   padding: 40rpx;
   box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
@@ -138,14 +138,30 @@
   margin-bottom: 32rpx;
 }
 
+.timeline-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.timeline-container {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.timeline-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 32rpx;
+}
+
 .timeline-item {
   position: relative;
   padding-left: 80rpx;
-  padding-bottom: 48rpx;
-}
-
-.timeline-item:last-child {
+  padding-right: 32rpx;
   padding-bottom: 0;
+  display: inline-block;
+  vertical-align: top;
+  width: 180rpx;
 }
 
 .timeline-dot {
@@ -176,10 +192,10 @@
 
 .timeline-line {
   position: absolute;
-  left: 22rpx;
-  top: 48rpx;
-  width: 4rpx;
-  height: calc(100% - 48rpx);
+  left: 50rpx;
+  top: 24rpx;
+  width: calc(100% - 60rpx);
+  height: 4rpx;
   background: #E2E8F0;
 }
 
@@ -188,13 +204,14 @@
 }
 
 .timeline-content {
-  padding-left: 16rpx;
+  padding-top: 16rpx;
 }
 
 .timeline-period {
-  font-size: 30rpx;
+  font-size: 24rpx;
   font-weight: 500;
-  margin-bottom: 8rpx;
+  margin-bottom: 4rpx;
+  white-space: nowrap;
 }
 
 .timeline-amount {

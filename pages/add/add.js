@@ -8,13 +8,14 @@ Page({
       totalAmount: '',
       monthlyPayment: '',
       totalPeriods: '',
+      paidPeriods: '',
       repaymentDay: 10,
       interestRate: ''
     },
     isEdit: false,
     editId: null,
     canSave: false,
-    dayOptions: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日'],
+    dayOptions: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日', '31日'],
     dayIndex: 9
   },
 
@@ -39,6 +40,7 @@ Page({
             totalAmount: String(ch.totalAmount),
             monthlyPayment: String(ch.monthlyPayment),
             totalPeriods: ch.totalPeriods ? String(ch.totalPeriods) : '',
+            paidPeriods: ch.paidPeriods ? String(ch.paidPeriods) : '',
             repaymentDay: ch.repaymentDay,
             interestRate: ch.interestRate ? String(ch.interestRate) : ''
           },
@@ -76,6 +78,10 @@ Page({
     this.setData({ 'form.totalPeriods': e.detail.value })
   },
 
+  onPaidPeriodsInput: function(e) {
+    this.setData({ 'form.paidPeriods': e.detail.value })
+  },
+
   onRateInput: function(e) {
     this.setData({ 'form.interestRate': e.detail.value })
   },
@@ -105,6 +111,7 @@ Page({
       totalAmount: total,
       monthlyPayment: parseFloat(f.monthlyPayment) || total,
       totalPeriods: parseInt(f.totalPeriods) || 0,
+      paidPeriods: parseInt(f.paidPeriods) || 0,
       repaymentDay: f.repaymentDay,
       interestRate: parseFloat(f.interestRate) || 0
     }
@@ -118,6 +125,7 @@ Page({
           channels[i].totalAmount = data.totalAmount
           channels[i].monthlyPayment = data.monthlyPayment
           channels[i].totalPeriods = data.totalPeriods
+          channels[i].paidPeriods = data.paidPeriods
           channels[i].repaymentDay = data.repaymentDay
           channels[i].interestRate = data.interestRate
           channels[i].progress = Math.round(((channels[i].totalAmount - channels[i].remaining) / channels[i].totalAmount) * 100)
@@ -129,7 +137,7 @@ Page({
       data.id = new Date().getTime()
       data.remaining = total
       data.progress = 0
-      data.paidPeriods = 0
+      data.paidPeriods = data.paidPeriods
       app.globalData.channels.push(data)
       wx.showToast({ title: '添加成功', icon: 'success' })
     }

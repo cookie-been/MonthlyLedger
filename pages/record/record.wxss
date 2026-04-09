@@ -31,4 +31,6 @@
 .record-channel { font-size: 30rpx; font-weight: 600; margin-bottom: 8rpx; }
 .record-time { font-size: 24rpx; color: #A0AEC0; }
 .record-note { font-size: 24rpx; color: #718096; margin-top: 8rpx; }
-.record-amount { font-size: 36rpx; font-weight: 700; color: #4ECDC4; }
+.record-amount { font-size: 36rpx; font-weight: 700; color: #4ECDC4; margin-right: 16rpx; }
+.record-delete { font-size: 24rpx; color: #FF6B6B; padding: 8rpx 16rpx; }
+.record-list { margin-top: 16rpx; }

@@ -26,6 +26,7 @@
 .stats-grid-value.success { color: #4ECDC4; }
 .stats-grid-value.warning { color: #F39C12; }
 .stats-grid-label { font-size: 24rpx; color: #718096; }
+
 .menu-section {
   background: #FFFFFF; margin: 0 40rpx 40rpx; border-radius: 32rpx;
   overflow: hidden; box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);

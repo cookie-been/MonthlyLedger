@@ -10,7 +10,8 @@ Page({
     remainingDisplay: '0.00',
     totalAmountDisplay: '0.00',
     paidDisplay: '0.00',
-    monthlyPaymentDisplay: '0.00'
+    monthlyPaymentDisplay: '0.00',
+    periodList: []
   },
 
   onLoad: function(options) {
@@ -25,11 +26,25 @@ Page({
       }
     }
     if (channel) {
+      var paidFromAmount = channel.totalAmount - channel.remaining
+      var paidFromPeriods = (channel.paidPeriods || 0) * channel.monthlyPayment
+      var paidAmount = Math.min(paidFromAmount, paidFromPeriods)
+      if (paidFromPeriods > paidFromAmount) {
+        paidAmount = paidFromPeriods
+      }
+      
+      // 生成从1开始的期数列表
+      var periodList = []
+      for (var p = 1; p <= channel.totalPeriods; p++) {
+        periodList.push(p)
+      }
+      
       this.setData({ 
         channel: channel,
+        periodList: periodList,
         remainingDisplay: this.formatMoney(channel.remaining),
         totalAmountDisplay: this.formatMoney(channel.totalAmount),
-        paidDisplay: this.formatMoney(channel.totalAmount - channel.remaining),
+        paidDisplay: this.formatMoney(paidAmount),
         monthlyPaymentDisplay: this.formatMoney(channel.monthlyPayment)
       })
       wx.setNavigationBarTitle({ title: channel.name })
@@ -113,7 +128,17 @@ Page({
     })
 
     app.saveData()
-    this.setData({ channel: channel, showRepayModal: false })
+    var paidFromAmount = channel.totalAmount - channel.remaining
+    var paidFromPeriods = (channel.paidPeriods || 0) * channel.monthlyPayment
+    var paidAmount = Math.min(paidFromAmount, paidFromPeriods)
+    if (paidFromPeriods > paidFromAmount) {
+      paidAmount = paidFromPeriods
+    }
+    this.setData({ 
+      channel: channel, 
+      showRepayModal: false,
+      paidDisplay: this.formatMoney(paidAmount)
+    })
 
     if (channel.remaining === 0) {
       this.checkAchievements()
